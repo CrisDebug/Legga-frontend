@@ -1,4 +1,5 @@
-﻿import { Component } from '@angular/core';
+﻿
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -12,8 +13,11 @@ export class MainLayoutComponent {
   menuAbierto = false;
 
   readonly opcionesMenu = [
+    { etiqueta: 'Panel principal', ruta: '/dashboard' },
     { etiqueta: 'Legajos', ruta: '/legajos' },
     { etiqueta: 'Categorías', ruta: '/categorias' },
+    { etiqueta: 'Usuarios', ruta: '/usuarios' },
+    { etiqueta: 'Notificaciones', ruta: '/notificaciones' },
     { etiqueta: 'Trazabilidad', ruta: '/auditoria' }
   ];
 
@@ -25,5 +29,4 @@ export class MainLayoutComponent {
     this.menuAbierto = false;
   }
 }
-
 
