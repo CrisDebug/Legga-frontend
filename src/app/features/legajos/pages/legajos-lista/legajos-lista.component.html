@@ -1,0 +1,57 @@
+﻿<section class="pagina-legajos">
+  <h1 class="titulo-legajos">Legajos</h1>
+  <div class="barra-herramientas">
+    <div class="barra-filtros">
+      <label class="campo">
+        <span>Buscar</span>
+        <input type="search" placeholder="Identificador o título" disabled>
+      </label>
+
+      <label class="campo campo-categoria">
+        <span>Categoría</span>
+        <select disabled>
+          <option>Todas</option>
+        </select>
+      </label>
+    </div>
+
+    <a class="btn-primary" routerLink="/legajos/nuevo">
+  <svg class="icono-nuevo" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="2"
+     stroke-linecap="round" stroke-linejoin="round"
+     aria-hidden="true">
+  <circle cx="12" cy="12" r="9"></circle>
+  <path d="M12 8v8M8 12h8"></path>
+</svg>
+  <span>Nuevo legajo</span>
+</a>
+  </div>
+
+  <div class="tabla-contenedor">
+    <table>
+      <thead>
+        <tr>
+          <th>Identificador</th>
+          <th>Título</th>
+          <th>Categoría</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="5" class="estado-vacio">No hay legajos para mostrar.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+

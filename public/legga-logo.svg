@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 665" role="img" aria-labelledby="title desc">
+  <title id="title">LEGGA</title>
+  <desc id="desc">Logotipo de LEGGA con un icono de documento terracota y letras color óxido.</desc>
+  <g id="simbolo-documento">
+    <path d="M101 139 L147 165 L550 165 L643 247 L643 539 L147 539 L101 493 Z" fill="#D95B3D"/>
+    <path d="M101 139 L147 165 L147 539 L101 493 Z" fill="#A8432B"/>
+    <path d="M550 165 L643 247 L550 247 Z" fill="#A8432B"/>
+  </g>
+  <text x="770" y="472" fill="#963F28"
+        font-family="Montserrat, Avenir Next, Helvetica Neue, Arial, sans-serif"
+        font-size="318" font-weight="300" letter-spacing="5">LEGGA</text>
+</svg>

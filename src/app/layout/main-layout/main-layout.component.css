@@ -1,0 +1,305 @@
+﻿:host {
+  display: block;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 12px;
+  background: #F5EFE7;
+  color: #49352D;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.layout {
+  position: relative;
+  display: flex;
+  width: min(1520px, 100%);
+  min-height: calc(100vh - 24px);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid #E5D8CA;
+  border-radius: 14px;
+  background: #F8F1E8;
+  box-shadow: 0 8px 28px rgb(73 53 45 / 8%);
+}
+
+.menu-lateral {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 220px;
+  padding: 34px 18px 24px;
+  background: #E8D8C8;
+  border: 0;
+  border-radius: 0;
+}
+
+.marca {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 8px 8px 48px;
+}
+
+.marca img {
+  display: block;
+  width: 174px;
+  max-width: 100%;
+  height: auto;
+}
+
+.navegacion {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.enlace-menu {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 48px;
+  padding: 0 13px;
+  border: 0;
+  border-left: 3px solid transparent;
+  border-radius: 5px;
+  color: #624538;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.enlace-menu:hover {
+  background: #E1CABB;
+  color: #873F2B;
+}
+
+.enlace-menu.activo {
+  border-left-color: #BD8068;
+  background: #F3E2D5;
+  color: #873F2B;
+  font-weight: 700;
+}
+
+.enlace-menu:focus-visible,
+.enlace-sesion:focus-visible,
+.boton-menu:focus-visible {
+  outline: 2px solid #BD8068;
+  outline-offset: 2px;
+}
+
+.menu-inferior {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.enlace-sesion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 5px;
+  color: #624538;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.enlace-sesion:hover {
+  background: #E1CABB;
+  color: #873F2B;
+}
+
+.icono-salida {
+  font-size: 19px;
+  line-height: 1;
+}
+
+.contenido-principal {
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  min-height: calc(100vh - 24px);
+  margin-left: 220px;
+  padding: 76px 34px 36px;
+  background: #F8F1E8;
+}
+
+.barra-movil,
+.fondo-menu {
+  display: none;
+}
+
+@media (min-width: 761px) {
+  .menu-lateral {
+    border-radius: 13px 0 0 13px;
+  }
+}
+
+@media (max-width: 760px) {
+  :host {
+    padding: 6px;
+  }
+
+  .layout {
+    display: block;
+    width: 100%;
+    min-height: calc(100dvh - 12px);
+    border-radius: 12px;
+  }
+
+  .barra-movil {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 62px;
+    box-sizing: border-box;
+    padding: 10px 16px;
+    background: #E8D8C8;
+  }
+
+  .boton-menu {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #873F2B;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .logo-movil {
+    display: block;
+    width: 124px;
+    height: auto;
+  }
+
+  .menu-lateral {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(280px, 85vw);
+    height: 100dvh;
+    overflow-y: auto;
+    border-radius: 0;
+    transform: translateX(-100%);
+    transition: transform 180ms ease;
+  }
+
+  .menu-lateral.abierto {
+    transform: translateX(0);
+  }
+
+  .fondo-menu.visible {
+    position: fixed;
+    inset: 0;
+    z-index: 25;
+    display: block;
+    background: rgb(49 37 30 / 30%);
+  }
+
+  .contenido-principal {
+    min-height: calc(100dvh - 74px);
+    margin-left: 0;
+    padding: 26px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enlace-menu,
+  .menu-lateral {
+    transition: none;
+  }
+}
+
+/* Iconografía lineal del menú LEGGA */
+.enlace-menu {
+  gap: 12px;
+}
+
+.icono-menu {
+  display: block;
+  flex: 0 0 19px;
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.enlace-menu span,
+.enlace-sesion span {
+  min-width: 0;
+}
+
+.icono-sesion {
+  flex-basis: 19px;
+}
+
+/* Sidebar crema: dar protagonismo al logotipo */
+.menu-lateral {
+  background: #F8F1E8;
+}
+
+.enlace-menu {
+  color: #624538;
+}
+
+.enlace-menu:hover {
+  background: #F0E3D7;
+  color: #873F2B;
+}
+
+.enlace-menu.activo {
+  background: #F3E2D5;
+  border-left-color: #BD8068;
+  color: #873F2B;
+}
+
+.enlace-sesion {
+  color: #624538;
+}
+
+.enlace-sesion:hover {
+  background: #F0E3D7;
+  color: #873F2B;
+}
+
+@media (max-width: 760px) {
+  .barra-movil {
+    background: #F8F1E8;
+  }
+}
+
+/* Separación visual sutil entre navegación y contenido */
+.menu-lateral {
+  z-index: 2;
+  box-shadow: 5px 0 14px rgb(73 53 45 / 7%);
+}
+
+/* Logotipo más discreto y equilibrado */
+.marca {
+  padding-bottom: 38px;
+}
+
+.marca img {
+  width: 148px;
+}
+
+/* Evitar una sombra excesiva en pantallas pequeñas */
+@media (max-width: 760px) {
+  .menu-lateral {
+    box-shadow: 5px 0 20px rgb(49 37 30 / 12%);
+  }
+
+  .marca img {
+    width: 148px;
+  }
+}
+

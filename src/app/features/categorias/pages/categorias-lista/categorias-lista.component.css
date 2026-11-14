@@ -1,0 +1,240 @@
+﻿:host {
+  display: block;
+  min-width: 0;
+  color: #49352D;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.pagina-categorias {
+  width: 100%;
+  min-width: 0;
+}
+
+.encabezado-categorias {
+  margin-bottom: 26px;
+}
+
+.encabezado-categorias h1 {
+  margin: 0 0 8px;
+  color: #49352D;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.encabezado-categorias p {
+  margin: 0;
+  color: #826D60;
+  font-size: 14px;
+}
+
+.tabla-contenedor {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #D9C5B4;
+  background: #FFFAF5;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+thead {
+  background: #EEDDCF;
+}
+
+th {
+  height: 48px;
+  padding: 0 18px;
+  color: #49352D;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+td {
+  padding: 18px;
+  border-top: 1px solid #D9C5B4;
+}
+
+.estado-vacio {
+  height: 48px;
+  color: #826D60;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .encabezado-categorias .titulo-categorias {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* Ajuste compacto de tabla de categorías */
+th {
+  height: 42px;
+  padding: 0 12px;
+}
+
+td {
+  padding: 12px;
+}
+
+/* Ancho compacto del contenido de Categorías */
+.pagina-categorias {
+  width: 100%;
+  max-width: 960px;
+  margin-right: auto;
+}
+
+.tabla-contenedor {
+  width: 100%;
+  max-width: 960px;
+  box-sizing: border-box;
+}
+
+th {
+  height: 40px;
+  padding: 0 12px;
+}
+
+td {
+  padding: 12px;
+}
+
+/* Icono del botón global de Categorías */
+.boton-nueva-categoria svg {
+  display: block;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Distribución del encabezado de Categorías */
+.encabezado-categorias .titulo-categorias {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+@media (max-width: 560px) {
+  .encabezado-categorias .titulo-categorias {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* Acabado suave LEGGA: tablas */
+.tabla-contenedor {
+  border-color: transparent;
+  border-radius: 6px;
+  box-shadow: 0 3px 12px rgb(73 53 45 / 6%);
+  overflow: hidden;
+}
+
+thead {
+  background: #EEDDCF;
+}
+
+td {
+  border-top-color: #E8D8C8;
+}
+
+/* Acabado final de tabla: sin líneas exteriores visibles */
+.tabla-contenedor {
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  background: #FFFAF5;
+  box-shadow: 0 3px 12px rgb(73 53 45 / 7%);
+  overflow: hidden;
+}
+
+.tabla-contenedor table {
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.tabla-contenedor th,
+.tabla-contenedor td {
+  border-left: none;
+  border-right: none;
+}
+
+.tabla-contenedor td {
+  border-top: 1px solid #F0E5D9;
+}
+
+/* Sombra terracota sutil para tablas LEGGA */
+.tabla-contenedor {
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  background: #FFFAF5;
+  box-shadow: 0 3px 12px rgb(174 96 67 / 9%);
+  overflow: hidden;
+}
+
+.tabla-contenedor table {
+  border: none;
+}
+
+.tabla-contenedor th,
+.tabla-contenedor td {
+  border-left: none;
+  border-right: none;
+}
+
+.tabla-contenedor td {
+  border-top: 1px solid #F0E5D9;
+}
+
+/* Ajustes comunes de ancho y tipografía de las tablas LEGGA */
+.pagina-categorias {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.tabla-contenedor {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.tabla-contenedor table {
+  width: 100%;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+}
+
+.tabla-contenedor th {
+  height: 40px;
+  padding: 0 12px;
+  color: #49352D;
+  font-size: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tabla-contenedor td {
+  padding: 12px;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.tabla-contenedor .estado-vacio {
+  color: #826D60;
+  text-align: center;
+}

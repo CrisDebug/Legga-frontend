@@ -1,0 +1,53 @@
+﻿<section class="pagina-formulario">
+  <header class="encabezado">
+    <h1>Nuevo legajo</h1>
+  </header>
+
+  <form class="formulario" (submit)="$event.preventDefault()">
+    <div class="campo">
+      <label for="titulo">Título <span class="obligatorio">*</span></label>
+      <input
+        id="titulo"
+        name="titulo"
+        type="text"
+        autocomplete="off"
+        placeholder="Título del legajo"
+        required
+        maxlength="160"
+        [value]="titulo"
+        (input)="titulo = $any($event.target).value"
+      >
+      @if (titulo.length > 0 && !tituloValido) {
+        <span class="error">Ingresa un título válido.</span>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="categoria">Categoría <span class="obligatorio">*</span></label>
+      <select id="categoria" name="categoria" required disabled>
+        <option value="">Seleccionar categoría</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="descripcion">Descripción <span class="opcional">(opcional)</span></label>
+      <textarea
+        id="descripcion"
+        name="descripcion"
+        rows="4"
+        maxlength="1000"
+        placeholder="Descripción"
+        [value]="descripcion"
+        (input)="descripcion = $any($event.target).value"
+      ></textarea>
+    </div>
+
+    <footer class="acciones">
+      <a class="btn-secondary" routerLink="/legajos">Cancelar</a>
+      <button class="btn-primary" type="button" disabled>
+        Guardar
+      </button>
+    </footer>
+  </form>
+</section>
+

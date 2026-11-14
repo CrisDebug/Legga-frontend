@@ -1,0 +1,97 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* TipografÃ­a global LEGGA */
+
+
+html,
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+html,
+body {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+
+/* ==================================================
+   SISTEMA GLOBAL DE BOTONES LEGGA
+   ================================================== */
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  width: fit-content;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.btn-primary {
+  background: #AE6043;
+  color: #FFFAF5;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #934C33;
+}
+
+.btn-secondary {
+  border-color: #D9C5B4;
+  background: #F0E5D9;
+  color: #49352D;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: #C5A995;
+  background: #E8D8C8;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: 2px solid #BD8068;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .btn-secondary {
+    transition: none;
+  }
+}
+
+
+

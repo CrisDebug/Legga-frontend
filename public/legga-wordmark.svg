@@ -1,0 +1,25 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 300 50"
+     role="img"
+     aria-labelledby="title">
+  <title id="title">LEGGA</title>
+
+  <g fill="none"
+     stroke="#A35D45"
+     stroke-width="2.8"
+     stroke-linecap="square"
+     stroke-linejoin="miter">
+
+    <text x="0"
+          y="40"
+          font-family="Montserrat, 'Tenor Sans', sans-serif"
+          font-size="38"
+          font-weight="300"
+          letter-spacing="4.5"
+          stroke="none"
+          fill="#A35D45">LEGG</text>
+
+    <!-- A geométrica abierta, sin puente -->
+    <path d="M210 40 L235 2 L260 40"/>
+  </g>
+</svg>

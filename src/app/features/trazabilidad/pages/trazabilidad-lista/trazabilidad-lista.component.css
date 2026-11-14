@@ -1,0 +1,150 @@
+﻿:host {
+  display: block;
+  color: #49352D;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.pagina-trazabilidad {
+  width: 100%;
+  max-width: 960px;
+  margin-right: auto;
+}
+
+.encabezado-trazabilidad {
+  margin-bottom: 24px;
+}
+
+.encabezado-trazabilidad h1 {
+  margin: 0 0 8px;
+  color: #49352D;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.encabezado-trazabilidad p {
+  margin: 0;
+  color: #725B4E;
+  font-size: 14px;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  border: 0;
+  border-radius: 7px;
+  background: #FFFAF5;
+  box-shadow: 0 3px 12px rgb(174 96 67 / 9%);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+thead {
+  background: #EEDDCF;
+}
+
+th {
+  padding: 14px 16px;
+  color: #49352D;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+td {
+  padding: 18px 16px;
+  color: #725B4E;
+  font-size: 14px;
+}
+
+tbody tr + tr {
+  border-top: 1px solid #F0E5D9;
+}
+
+.estado-vacio {
+  padding: 32px 16px;
+  text-align: center;
+}
+
+/* Tipografía uniforme con las tablas de LEGGA */
+.tabla-contenedor table {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.tabla-contenedor th,
+.tabla-contenedor td {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.tabla-contenedor th {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.tabla-contenedor td {
+  font-size: 14px;
+}
+
+/* Ajuste tipográfico para igualar la suavidad de las tablas LEGGA */
+.tabla-contenedor th {
+  color: #725B4E;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tabla-contenedor td {
+  color: #826D60;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.estado-vacio {
+  color: #826D60;
+  font-weight: 400;
+}
+
+/* Ajustes comunes de ancho y tipografía de las tablas LEGGA */
+.pagina-trazabilidad {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.tabla-contenedor {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.tabla-contenedor table {
+  width: 100%;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+}
+
+.tabla-contenedor th {
+  height: 40px;
+  padding: 0 12px;
+  color: #49352D;
+  font-size: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tabla-contenedor td {
+  padding: 12px;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.tabla-contenedor .estado-vacio {
+  color: #826D60;
+  text-align: center;
+}
