@@ -1,0 +1,290 @@
+
+<!--
+  LEGGA - Panel principal
+  Responsabilidad:
+  - Presentar los indicadores generales de gestión documental.
+  - Mostrar la distribución de legajos por estado y categoría.
+  - Representar los estados de carga y error.
+  
+  Los datos son proporcionados por DashboardService.
+  Este archivo contiene únicamente estructura y presentación.
+-->
+
+<section class="flex flex-col gap-6 text-[#49352D]">
+
+  <!-- ======================================================
+       ENCABEZADO DEL PANEL
+       ====================================================== -->
+  <header class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+
+    <div>
+      <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">
+        Panel principal
+      </h1>
+
+      <p class="text-sm text-[#806C60]">
+        Resumen general de la gestión documental.
+      </p>
+    </div>
+
+    <!-- Identifica que la información actual proviene de datos ficticios -->
+    <span class="w-fit rounded-full border border-[#E5C8B6] bg-[#F8E9DF] px-3 py-1 text-xs font-bold text-[#873F2B]">
+      Datos de demostración
+    </span>
+
+  </header>
+
+
+  <!-- ======================================================
+       ESTADO DE CARGA
+       Se muestra mientras el servicio obtiene la información.
+       ====================================================== -->
+  @if (cargando) {
+
+    <div class="flex items-center justify-center rounded-xl border border-[#E9DED3] bg-[#FFFCF8] p-10">
+
+      <p class="text-sm text-[#806C60]">
+        Cargando información del panel...
+      </p>
+
+    </div>
+
+  }
+
+  <!-- ======================================================
+       ESTADO DE ERROR
+       Se muestra cuando no es posible obtener la información.
+       ====================================================== -->
+  @else if (error) {
+
+    <div
+      role="alert"
+      class="rounded-xl border border-red-200 bg-red-50 p-5 text-sm text-red-700"
+    >
+      {{ error }}
+    </div>
+
+  }
+
+  <!-- ======================================================
+       CONTENIDO PRINCIPAL DEL DASHBOARD
+       Solo se presenta cuando los datos están disponibles.
+       ====================================================== -->
+  @else if (dashboard) {
+
+    <!-- ====================================================
+         INDICADORES PRINCIPALES
+         Información general de los legajos.
+         ==================================================== -->
+    <section
+      aria-label="Indicadores principales"
+      class="flex flex-col gap-4 sm:flex-row sm:flex-wrap"
+    >
+
+      <!-- Total de legajos -->
+      <article class="flex min-w-0 flex-1 flex-col gap-2 rounded-xl border border-[#E9DED3] bg-[#FFFCF8] p-5 shadow-sm sm:min-w-52">
+
+        <h2 class="text-sm font-semibold text-[#806C60]">
+          Total de legajos
+        </h2>
+
+        <p class="text-3xl font-extrabold">
+          {{ dashboard.indicadores.totalLegajos }}
+        </p>
+
+        <span class="text-xs text-[#806C60]">
+          Legajos registrados
+        </span>
+
+      </article>
+
+
+      <!-- Legajos activos -->
+      <article class="flex min-w-0 flex-1 flex-col gap-2 rounded-xl border border-[#E9DED3] bg-[#FFFCF8] p-5 shadow-sm sm:min-w-52">
+
+        <h2 class="text-sm font-semibold text-[#806C60]">
+          Legajos activos
+        </h2>
+
+        <p class="text-3xl font-extrabold">
+          {{ dashboard.indicadores.legajosActivos }}
+        </p>
+
+        <span class="text-xs text-[#806C60]">
+          Disponibles para gestión
+        </span>
+
+      </article>
+
+
+      <!-- Legajos archivados -->
+      <article class="flex min-w-0 flex-1 flex-col gap-2 rounded-xl border border-[#E9DED3] bg-[#FFFCF8] p-5 shadow-sm sm:min-w-52">
+
+        <h2 class="text-sm font-semibold text-[#806C60]">
+          Legajos archivados
+        </h2>
+
+        <p class="text-3xl font-extrabold">
+          {{ dashboard.indicadores.legajosArchivados }}
+        </p>
+
+        <span class="text-xs text-[#806C60]">
+          Fuera de gestión activa
+        </span>
+
+      </article>
+
+
+      <!-- Porcentaje general de completitud -->
+      <article class="flex min-w-0 flex-1 flex-col gap-2 rounded-xl border border-[#E9DED3] bg-[#FFFCF8] p-5 shadow-sm sm:min-w-52">
+
+        <h2 class="text-sm font-semibold text-[#806C60]">
+          Completitud documental
+        </h2>
+
+        <p class="text-3xl font-extrabold">
+          {{ dashboard.indicadores.porcentajeCompletitud }}%
+        </p>
+
+        <span class="text-xs text-[#806C60]">
+          Cumplimiento de requisitos
+        </span>
+
+      </article>
+
+    </section>
+
+
+    <!-- ====================================================
+         REQUISITOS DOCUMENTALES
+         Cantidad general de requisitos cumplidos y pendientes.
+         ==================================================== -->
+    <section class="flex flex-col gap-4 sm:flex-row">
+
+      <!-- Requisitos cumplidos -->
+      <article class="flex flex-1 flex-col gap-2 rounded-xl border border-[#E9DED3] bg-[#FFFCF8] p-5">
+
+        <h2 class="text-sm font-semibold text-[#806C60]">
+          Requisitos cumplidos
+        </h2>
+
+        <p class="text-2xl font-extrabold text-[#52765B]">
+          {{ dashboard.indicadores.requisitosCumplidos }}
+        </p>
+
+      </article>
+
+
+      <!-- Requisitos pendientes -->
+      <article class="flex flex-1 flex-col gap-2 rounded-xl border border-[#E9DED3] bg-[#FFFCF8] p-5">
+
+        <h2 class="text-sm font-semibold text-[#806C60]">
+          Requisitos pendientes
+        </h2>
+
+        <p class="text-2xl font-extrabold text-[#AE6043]">
+          {{ dashboard.indicadores.requisitosPendientes }}
+        </p>
+
+      </article>
+
+    </section>
+
+
+    <!-- ====================================================
+         DISTRIBUCIÓN DE LEGAJOS
+         Presenta información agrupada por estado y categoría.
+         ==================================================== -->
+    <section class="flex flex-col gap-5 lg:flex-row">
+
+      <!-- Distribución por estado -->
+      <article class="flex min-w-0 flex-1 flex-col gap-5 rounded-xl border border-[#E9DED3] bg-[#FFFCF8] p-5 shadow-sm">
+
+        <div>
+          <h2 class="font-extrabold">
+            Legajos por estado
+          </h2>
+
+          <p class="text-sm text-[#806C60]">
+            Distribución según situación actual.
+          </p>
+        </div>
+
+        <!-- Recorre los estados recibidos desde el servicio -->
+        @for (estado of dashboard.legajosPorEstado; track estado.estado) {
+
+          <div class="flex flex-col gap-2">
+
+            <div class="flex justify-between gap-3 text-sm">
+
+              <span>
+                {{ estado.estado }}
+              </span>
+
+              <span class="font-bold">
+                {{ estado.cantidad }}
+              </span>
+
+            </div>
+
+            <!-- Barra proporcional al total de legajos -->
+            <div class="h-3 overflow-hidden rounded-full bg-[#F0E5D9]">
+
+              <div
+                class="h-full rounded-full bg-[#AE6043]"
+                [style.width.%]="
+                  dashboard.indicadores.totalLegajos > 0
+                    ? estado.cantidad / dashboard.indicadores.totalLegajos * 100
+                    : 0
+                "
+              ></div>
+
+            </div>
+
+          </div>
+
+        }
+
+      </article>
+
+
+      <!-- Distribución por categoría -->
+      <article class="flex min-w-0 flex-1 flex-col gap-5 rounded-xl border border-[#E9DED3] bg-[#FFFCF8] p-5 shadow-sm">
+
+        <div>
+          <h2 class="font-extrabold">
+            Legajos por categoría
+          </h2>
+
+          <p class="text-sm text-[#806C60]">
+            Distribución de legajos registrados.
+          </p>
+        </div>
+
+        <!-- Recorre las categorías recibidas desde el servicio -->
+        @for (
+          categoria of dashboard.legajosPorCategoria;
+          track categoria.categoriaId
+        ) {
+
+          <div class="flex items-center justify-between gap-3 border-b border-[#F0E5D9] pb-3 last:border-0 last:pb-0">
+
+            <span class="text-sm font-medium">
+              {{ categoria.categoriaNombre }}
+            </span>
+
+            <span class="rounded-lg bg-[#F3E2D5] px-3 py-1 text-sm font-bold text-[#873F2B]">
+              {{ categoria.cantidad }}
+            </span>
+
+          </div>
+
+        }
+
+      </article>
+
+    </section>
+
+  }
+
+</section>
