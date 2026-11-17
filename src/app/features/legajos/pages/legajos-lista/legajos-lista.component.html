@@ -1,57 +1,257 @@
-﻿<section class="pagina-legajos">
-  <h1 class="titulo-legajos">Legajos</h1>
-  <div class="barra-herramientas">
-    <div class="barra-filtros">
-      <label class="campo">
-        <span>Buscar</span>
-        <input type="search" placeholder="Identificador o título" disabled>
-      </label>
+﻿
+<section class="pagina-legajos">
 
-      <label class="campo campo-categoria">
-        <span>Categoría</span>
-        <select disabled>
-          <option>Todas</option>
-        </select>
-      </label>
+  <!-- =====================================================
+       ENCABEZADO
+       ===================================================== -->
+  <header class="encabezado-legajos">
+    <div>
+      <h1 class="titulo-legajos">Legajos</h1>
+
+      <p class="subtitulo-legajos">
+        Administra y consulta los legajos documentales.
+      </p>
+    </div>
+  </header>
+
+  <!-- =====================================================
+       BÚSQUEDA, FILTRO Y CREACIÓN
+       ===================================================== -->
+  <div class="barra-filtros">
+
+    <!-- Búsqueda por identificador o título -->
+    <label class="campo-busqueda">
+      <span>Buscar legajo</span>
+
+      <div class="input-con-icono">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-4-4"></path>
+        </svg>
+
+        <input
+          type="search"
+          placeholder="Identificador o título..."
+          [value]="busqueda"
+          (input)="alBuscar($event)"
+          aria-label="Buscar legajo por identificador o título"
+        >
+
+      </div>
+    </label>
+
+    <!-- Filtro por categoría -->
+    <label class="campo-categoria">
+      <span>Filtrar por categoría</span>
+
+      <select
+        [value]="categoriaSeleccionada"
+        (change)="alCambiarCategoria($event)"
+        aria-label="Filtrar legajos por categoría"
+      >
+        <option value="">Todas las categorías</option>
+
+        @for (categoria of categorias; track categoria.id) {
+          <option [value]="categoria.id">
+            {{ categoria.nombre }}
+          </option>
+        }
+
+      </select>
+    </label>
+
+    <!-- Botón para crear legajo -->
+    <a
+      class="btn-primary"
+      routerLink="/legajos/nuevo"
+    >
+      <svg
+        class="icono-nuevo"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M12 8v8M8 12h8"></path>
+      </svg>
+
+      <span>Nuevo legajo</span>
+    </a>
+
+  </div>
+
+  <!-- =====================================================
+       RESUMEN DE RESULTADOS
+       ===================================================== -->
+  <div class="resumen-legajos">
+    {{ totalRegistros }}
+    {{ totalRegistros === 1
+      ? 'legajo encontrado'
+      : 'legajos encontrados' }}
+  </div>
+
+  <!-- =====================================================
+       CONTENIDO DEL LISTADO
+       ===================================================== -->
+
+  @if (cargando) {
+
+    <div class="mensaje-estado">
+      Cargando legajos...
     </div>
 
-    <a class="btn-primary" routerLink="/legajos/nuevo">
-  <svg class="icono-nuevo" viewBox="0 0 24 24" fill="none"
-     stroke="currentColor" stroke-width="2"
-     stroke-linecap="round" stroke-linejoin="round"
-     aria-hidden="true">
-  <circle cx="12" cy="12" r="9"></circle>
-  <path d="M12 8v8M8 12h8"></path>
-</svg>
-  <span>Nuevo legajo</span>
-</a>
-  </div>
+  } @else if (error) {
 
-  <div class="tabla-contenedor">
-    <table>
-      <thead>
-        <tr>
-          <th>Identificador</th>
-          <th>Título</th>
-          <th>Categoría</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="5" class="estado-vacio">No hay legajos para mostrar.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="mensaje-estado mensaje-error">
+      {{ error }}
+    </div>
+
+  } @else if (legajos.length === 0) {
+
+    <div class="mensaje-estado">
+      No se encontraron legajos con los filtros seleccionados.
+    </div>
+
+  } @else {
+
+    <!-- ===================================================
+         TARJETAS DE LEGAJOS
+         =================================================== -->
+    <div class="grid-legajos">
+
+      @for (legajo of legajos; track legajo.id) {
+
+        <article class="tarjeta-legajo">
+
+          <!-- Cabecera de tarjeta -->
+          <div class="tarjeta-cabecera">
+
+            <div class="icono-carpeta" aria-hidden="true">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                ></path>
+              </svg>
+
+            </div>
+
+            <!-- Estado del legajo -->
+            <span
+              class="estado-legajo"
+              [class.estado-activo]="legajo.estado === 'ACTIVO'"
+              [class.estado-archivado]="legajo.estado === 'ARCHIVADO'"
+            >
+              {{ legajo.estado === 'ACTIVO' ? 'Activo' : 'Archivado' }}
+            </span>
+
+          </div>
+
+          <!-- Información principal -->
+          <div class="tarjeta-contenido">
+
+            <span class="identificador-legajo">
+              {{ legajo.id }}
+            </span>
+
+            <h2 class="nombre-legajo">
+              {{ legajo.titulo }}
+            </h2>
+
+            <p class="categoria-legajo">
+              {{ legajo.categoriaNombre }}
+            </p>
+
+          </div>
+
+          <!-- Pie de tarjeta -->
+          <div class="tarjeta-pie">
+
+  <span class="etiqueta-categoria">
+    Legajo documental
+  </span>
+
+  <a
+    class="btn-ver-detalle"
+    [routerLink]="['/legajos', legajo.id]"
+    [attr.aria-label]="'Ver detalle de ' + legajo.titulo"
+    title="Ver detalle"
+  >
+    <!-- Icono de ojo -->
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+  </a>
+
+</div>
+
+        </article>
+
+      }
+
+    </div>
+
+    <!-- ===================================================
+         PAGINACIÓN
+         =================================================== -->
+    <nav
+      class="paginacion-legajos"
+      aria-label="Paginación de legajos"
+    >
+
+      <button
+        type="button"
+        class="btn-paginacion"
+        (click)="paginaAnterior()"
+        [disabled]="paginaActual === 0"
+      >
+        Anterior
+      </button>
+
+      <span class="pagina-indicador">
+        Página {{ paginaActual + 1 }} de {{ totalPaginas }}
+      </span>
+
+      <button
+        type="button"
+        class="btn-paginacion"
+        (click)="paginaSiguiente()"
+        [disabled]="paginaActual >= totalPaginas - 1"
+      >
+        Siguiente
+      </button>
+
+    </nav>
+
+  }
+
 </section>
-
-
-
-
-
-
-
-
-

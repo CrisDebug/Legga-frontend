@@ -1,0 +1,647 @@
+
+/* =========================================================
+   LEGGA - DETALLE DEL LEGAJO
+   Diseño basado en la pantalla de referencia aprobada.
+   Responsive: escritorio, tablet y móvil.
+   ========================================================= */
+
+
+/* =========================================================
+   1. CONTENEDOR GENERAL
+   ========================================================= */
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  color: #49352D;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.pagina-detalle {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   2. BOTÓN VOLVER
+   Posición superior izquierda, igual a categorías.
+   ========================================================= */
+
+.btn-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 15px;
+  color: #AE6043;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.icono-volver {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #E8D2C2;
+  border-radius: 50%;
+  background: #FFFAF5;
+}
+
+.icono-volver svg {
+  width: 13px;
+  height: 13px;
+}
+
+.btn-volver:hover {
+  color: #873F2B;
+}
+
+
+/* =========================================================
+   3. ENCABEZADO
+   ========================================================= */
+
+.encabezado {
+  margin-bottom: 17px;
+}
+
+.encabezado h1 {
+  margin: 0;
+  color: #49352D;
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.encabezado p {
+  margin: 4px 0 0;
+  color: #826D60;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   4. TARJETA PRINCIPAL DEL LEGAJO
+   ========================================================= */
+
+.tarjeta-principal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  width: 100%;
+  min-width: 0;
+  min-height: 100px;
+  padding: 16px;
+  box-sizing: border-box;
+  border: 1px solid #F0E5D9;
+  border-radius: 12px;
+  background: #FFFAF5;
+  box-shadow: 0 3px 12px rgb(174 96 67 / 7%);
+}
+
+
+/* =========================================================
+   5. IDENTIDAD DEL LEGAJO
+   ========================================================= */
+
+.identidad-legajo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+.icono-carpeta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 66px;
+  flex: 0 0 66px;
+  border-radius: 14px;
+  background: #F8EFE6;
+  color: #AE6043;
+}
+
+.icono-carpeta svg {
+  width: 40px;
+  height: 40px;
+}
+
+.datos-identificacion {
+  min-width: 0;
+}
+
+.identificador {
+  display: block;
+  margin-bottom: 4px;
+  color: #AE6043;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.datos-identificacion h2 {
+  margin: 0;
+  color: #49352D;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.categoria {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+  color: #49352D;
+  font-size: 12px;
+}
+
+.categoria svg {
+  width: 19px;
+  height: 19px;
+  color: #AE6043;
+}
+
+
+/* =========================================================
+   6. ESTADO Y ACCIONES PRINCIPALES
+   ========================================================= */
+
+.acciones-principales {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.estado-legajo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 13px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.estado-activo {
+  background: #E5F1E6;
+  color: #397447;
+}
+
+.estado-archivado {
+  background: #F1E8E2;
+  color: #826D60;
+}
+
+.separador-acciones {
+  width: 1px;
+  height: 42px;
+  margin: 0 8px;
+  background: #F0E5D9;
+}
+
+
+/* Botón editar */
+
+.btn-editar,
+.btn-archivar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  border: 1px solid #AE6043;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn-editar {
+  background: #FFFAF5;
+  color: #AE6043;
+  transition: background 0.2s ease;
+}
+
+.btn-editar:hover {
+  background: #F8EFE6;
+}
+
+.btn-archivar {
+  background: #AE6043;
+  color: #FFFAF5;
+}
+
+.btn-editar svg,
+.btn-archivar svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-archivar:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   7. PESTAÑAS DE NAVEGACIÓN
+   ========================================================= */
+
+.pestanas {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 10px;
+  border-bottom: 1px solid #E8D2C2;
+}
+
+.pestana {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 0 17px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: #826D60;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.pestana svg {
+  width: 18px;
+  height: 18px;
+}
+
+.pestana:hover {
+  color: #AE6043;
+}
+
+.pestana-activa {
+  border-bottom-color: #AE6043;
+  color: #AE6043;
+}
+
+
+/* =========================================================
+   8. CONTENIDO DE LA PESTAÑA INFORMACIÓN
+   Dos columnas en escritorio.
+   ========================================================= */
+
+.contenido-pestana {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 16px;
+  margin-top: 17px;
+  align-items: stretch;
+}
+
+
+/* =========================================================
+   9. PANEL DE INFORMACIÓN
+   ========================================================= */
+
+.panel-informacion,
+.panel-documentos {
+  min-width: 0;
+  padding: 18px;
+  box-sizing: border-box;
+  border: 1px solid #F0E5D9;
+  border-radius: 12px;
+  background: #FFFAF5;
+  box-shadow: 0 3px 12px rgb(174 96 67 / 7%);
+}
+
+.panel-informacion h3,
+.panel-documentos h3 {
+  margin: 0;
+  color: #49352D;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.panel-informacion h3 {
+  padding-bottom: 13px;
+  border-bottom: 1px solid #F0E5D9;
+}
+
+
+/* Filas de información */
+
+.fila-informacion {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 42px;
+  padding: 9px 3px;
+  border-bottom: 1px solid #F0E5D9;
+}
+
+.fila-informacion > span {
+  color: #49352D;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.fila-informacion strong {
+  min-width: 0;
+  color: #49352D;
+  font-size: 12px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.fila-descripcion {
+  align-items: start;
+}
+
+.fila-descripcion p {
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: 7px;
+  background: #F8EFE6;
+  color: #49352D;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.estado-tabla {
+  padding: 4px 11px;
+}
+
+
+/* =========================================================
+   10. PANEL DE DOCUMENTOS
+   ========================================================= */
+
+.panel-documentos {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.cabecera-documentos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+
+/* Botón agregar documento */
+
+.btn-agregar-documento {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 13px;
+  border: none;
+  border-radius: 7px;
+  background: #AE6043;
+  color: #FFFAF5;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: not-allowed;
+}
+
+.btn-agregar-documento span {
+  font-size: 19px;
+  line-height: 1;
+}
+
+.btn-agregar-documento:disabled {
+  opacity: 0.75;
+}
+
+
+/* Estado vacío documental */
+
+.documentos-vacios {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 190px;
+  padding: 22px;
+  border: 1px dashed #E8D2C2;
+  border-radius: 9px;
+  background: #FFFAF5;
+  text-align: center;
+}
+
+.documentos-vacios svg {
+  width: 34px;
+  height: 34px;
+  margin-bottom: 12px;
+  color: #AE6043;
+}
+
+.documentos-vacios strong {
+  color: #49352D;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.documentos-vacios p {
+  max-width: 300px;
+  margin: 7px 0 0;
+  color: #826D60;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* Pestaña documentos: panel completo */
+
+.panel-documentos-completo {
+  min-height: 300px;
+  margin-top: 17px;
+}
+
+
+/* =========================================================
+   11. MENSAJES DE CARGA Y ERROR
+   ========================================================= */
+
+.mensaje-estado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  padding: 24px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: #FFFAF5;
+  box-shadow: 0 3px 12px rgb(174 96 67 / 7%);
+  color: #826D60;
+  font-size: 13px;
+  text-align: center;
+}
+
+.mensaje-error {
+  background: #FCE9E5;
+  color: #A13F32;
+}
+
+
+/* =========================================================
+   12. TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .tarjeta-principal {
+    flex-wrap: wrap;
+  }
+
+  .acciones-principales {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .contenido-pestana {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+}
+
+
+/* =========================================================
+   13. MÓVIL
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  /* Encabezado */
+  .encabezado h1 {
+    font-size: 23px;
+  }
+
+  /* Tarjeta superior */
+  .tarjeta-principal {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 17px;
+    padding: 16px;
+  }
+
+  .identidad-legajo {
+    gap: 13px;
+    width: 100%;
+  }
+
+  .icono-carpeta {
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
+  }
+
+  .icono-carpeta svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .datos-identificacion h2 {
+    font-size: 16px;
+  }
+
+  /* Acciones */
+  .acciones-principales {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 9px;
+  }
+
+  .separador-acciones {
+    display: none;
+  }
+
+  /* Pestañas */
+  .pestanas {
+    gap: 0;
+  }
+
+  .pestana {
+    flex: 1;
+    gap: 7px;
+    padding: 0 8px;
+    font-size: 12px;
+  }
+
+  /* Una columna en móvil */
+  .contenido-pestana {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  .panel-informacion,
+  .panel-documentos {
+    padding: 16px;
+  }
+
+  .panel-documentos-completo {
+    margin-top: 14px;
+  }
+
+}
+
+
+/* =========================================================
+   14. MÓVILES PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .acciones-principales {
+    width: 100%;
+  }
+
+  .btn-editar,
+  .btn-archivar {
+    flex: 1;
+    padding: 0 10px;
+  }
+
+  .fila-informacion {
+    grid-template-columns: minmax(80px, 0.8fr) minmax(0, 1.2fr);
+    gap: 8px;
+  }
+
+  .cabecera-documentos {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+}

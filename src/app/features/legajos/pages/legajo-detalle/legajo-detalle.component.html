@@ -1,0 +1,319 @@
+
+<section class="pagina-detalle">
+
+  @if (cargando) {
+
+    <div class="mensaje-estado">
+      Cargando información del legajo...
+    </div>
+
+  } @else if (error) {
+
+    <div class="mensaje-estado mensaje-error" role="alert">
+      {{ error }}
+    </div>
+
+  } @else if (legajo) {
+
+    <!-- =================================================
+         NAVEGACIÓN
+         ================================================= -->
+
+    <a class="btn-volver" routerLink="/legajos">
+      <span class="icono-volver" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"></path>
+        </svg>
+      </span>
+      Volver a legajos
+    </a>
+
+    <!-- =================================================
+         ENCABEZADO
+         ================================================= -->
+
+    <header class="encabezado">
+      <h1>Detalle del legajo</h1>
+      <p>Consulta la información del legajo y sus documentos asociados.</p>
+    </header>
+
+    <!-- =================================================
+         TARJETA SUPERIOR DEL LEGAJO
+         ================================================= -->
+
+    <article class="tarjeta-principal">
+
+      <div class="identidad-legajo">
+
+        <!-- Icono de carpeta -->
+        <div class="icono-carpeta" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          </svg>
+        </div>
+
+        <!-- Datos principales -->
+        <div class="datos-identificacion">
+          <span class="identificador">
+            {{ legajo.id }}
+          </span>
+
+          <h2>{{ legajo.titulo }}</h2>
+
+          <div class="categoria">
+            <svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round"
+              aria-hidden="true">
+              <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            </svg>
+
+            <span>Categoría: {{ legajo.categoriaNombre }}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Estado y acciones -->
+      <div class="acciones-principales">
+
+        <span
+          class="estado-legajo"
+          [class.estado-activo]="legajo.estado === 'ACTIVO'"
+          [class.estado-archivado]="legajo.estado === 'ARCHIVADO'"
+        >
+          {{ legajo.estado === 'ACTIVO' ? 'Activo' : 'Archivado' }}
+        </span>
+
+        <div class="separador-acciones"></div>
+
+        <a
+          class="btn-editar"
+          [routerLink]="['/legajos', legajo.id, 'editar']"
+        >
+          <svg viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round"
+            aria-hidden="true">
+            <path d="m16 4 4 4"></path>
+            <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"></path>
+          </svg>
+          Editar
+        </a>
+
+        <button
+          type="button"
+          class="btn-archivar"
+          disabled
+          title="Funcionalidad pendiente de integración"
+        >
+          <svg viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round"
+            aria-hidden="true">
+            <rect x="3" y="4" width="18" height="5" rx="1"></rect>
+            <path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"></path>
+            <path d="M10 13h4"></path>
+          </svg>
+          Archivar
+        </button>
+
+      </div>
+
+    </article>
+
+    <!-- =================================================
+         PESTAÑAS
+         ================================================= -->
+
+    <nav class="pestanas" aria-label="Secciones del legajo">
+
+      <button
+        type="button"
+        class="pestana"
+        [class.pestana-activa]="pestanaActiva === 'informacion'"
+        [attr.aria-pressed]="pestanaActiva === 'informacion'"
+        (click)="cambiarPestana('informacion')"
+      >
+        <svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <path d="M12 8v.01M12 12v4"></path>
+          <circle cx="12" cy="12" r="9"></circle>
+        </svg>
+        Información
+      </button>
+
+      <button
+        type="button"
+        class="pestana"
+        [class.pestana-activa]="pestanaActiva === 'documentos'"
+        [attr.aria-pressed]="pestanaActiva === 'documentos'"
+        (click)="cambiarPestana('documentos')"
+      >
+        <svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <path d="M14 2v6h6M8 13h8M8 17h8"></path>
+        </svg>
+        Documentos
+      </button>
+
+    </nav>
+
+    <!-- =================================================
+         PESTAÑA INFORMACIÓN
+         ================================================= -->
+
+    @if (pestanaActiva === 'informacion') {
+
+      <div class="contenido-pestana">
+
+        <!-- Panel izquierdo: información del legajo -->
+        <section class="panel-informacion">
+
+          <h3>Información del legajo</h3>
+
+          <div class="fila-informacion">
+            <span>Identificador</span>
+            <strong>{{ legajo.id }}</strong>
+          </div>
+
+          <div class="fila-informacion">
+            <span>Título</span>
+            <strong>{{ legajo.titulo }}</strong>
+          </div>
+
+          <div class="fila-informacion">
+            <span>Categoría</span>
+            <strong>{{ legajo.categoriaNombre }}</strong>
+          </div>
+
+          <div class="fila-informacion fila-descripcion">
+            <span>Descripción</span>
+            <p>{{ legajo.descripcion || 'Sin descripción registrada.' }}</p>
+          </div>
+
+          <div class="fila-informacion">
+            <span>Estado</span>
+            <strong>
+              <span
+                class="estado-legajo estado-tabla"
+                [class.estado-activo]="legajo.estado === 'ACTIVO'"
+                [class.estado-archivado]="legajo.estado === 'ARCHIVADO'"
+              >
+                {{ legajo.estado === 'ACTIVO' ? 'Activo' : 'Archivado' }}
+              </span>
+            </strong>
+          </div>
+
+          <div class="fila-informacion">
+            <span>Creado por</span>
+            <strong>{{ legajo.creadoPorNombre || 'No registrado' }}</strong>
+          </div>
+
+          <div class="fila-informacion">
+            <span>Fecha de creación</span>
+            <strong>{{ formatearFecha(legajo.createdAt) }}</strong>
+          </div>
+
+          <div class="fila-informacion">
+            <span>Última actualización</span>
+            <strong>{{ formatearFecha(legajo.updatedAt) }}</strong>
+          </div>
+
+        </section>
+
+        <!-- Panel derecho: documentos asociados -->
+        <section class="panel-documentos">
+
+          <header class="cabecera-documentos">
+            <h3>Documentos asociados</h3>
+
+            <button
+              type="button"
+              class="btn-agregar-documento"
+              disabled
+              title="Funcionalidad pendiente de integración"
+            >
+              <span aria-hidden="true">+</span>
+              Agregar documento
+            </button>
+          </header>
+
+          <div class="documentos-vacios">
+            <svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round"
+              aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <path d="M14 2v6h6M8 13h8M8 17h5"></path>
+            </svg>
+
+            <strong>Sin documentos asociados</strong>
+
+            <p>
+              Los documentos de este legajo se mostrarán aquí
+              cuando se integre el módulo documental.
+            </p>
+          </div>
+
+        </section>
+
+      </div>
+
+    }
+
+    <!-- =================================================
+         PESTAÑA DOCUMENTOS
+         ================================================= -->
+
+    @if (pestanaActiva === 'documentos') {
+
+      <section class="panel-documentos panel-documentos-completo">
+
+        <header class="cabecera-documentos">
+          <h3>Documentos asociados</h3>
+
+          <button
+            type="button"
+            class="btn-agregar-documento"
+            disabled
+            title="Funcionalidad pendiente de integración"
+          >
+            <span aria-hidden="true">+</span>
+            Agregar documento
+          </button>
+        </header>
+
+        <div class="documentos-vacios">
+          <svg viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round"
+            aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <path d="M14 2v6h6M8 13h8M8 17h5"></path>
+          </svg>
+
+          <strong>Sin documentos asociados</strong>
+
+          <p>
+            La gestión documental estará disponible
+            cuando se integre el módulo correspondiente.
+          </p>
+        </div>
+
+      </section>
+
+    }
+
+  }
+
+</section>

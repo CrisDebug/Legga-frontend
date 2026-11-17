@@ -1,11 +1,19 @@
-﻿<section class="pagina-formulario">
+﻿
+<section class="pagina-formulario">
+
   <header class="encabezado">
     <h1>Nuevo legajo</h1>
+    <p>Completa la información para crear un nuevo legajo.</p>
   </header>
 
-  <form class="formulario" (submit)="$event.preventDefault()">
+  <form class="formulario" (submit)="guardar($event)">
+
+    <!-- Título del legajo -->
     <div class="campo">
-      <label for="titulo">Título <span class="obligatorio">*</span></label>
+      <label for="titulo">
+        Título <span class="obligatorio">*</span>
+      </label>
+
       <input
         id="titulo"
         name="titulo"
@@ -13,41 +21,89 @@
         autocomplete="off"
         placeholder="Título del legajo"
         required
-        maxlength="160"
+        maxlength="150"
         [value]="titulo"
         (input)="titulo = $any($event.target).value"
       >
+
       @if (titulo.length > 0 && !tituloValido) {
-        <span class="error">Ingresa un título válido.</span>
+        <span class="error">
+          Ingresa un título válido de máximo 150 caracteres.
+        </span>
       }
     </div>
 
+    <!-- Selección de categoría -->
     <div class="campo">
-      <label for="categoria">Categoría <span class="obligatorio">*</span></label>
-      <select id="categoria" name="categoria" required disabled>
+      <label for="categoria">
+        Categoría <span class="obligatorio">*</span>
+      </label>
+
+      <select
+        id="categoria"
+        name="categoria"
+        required
+        [value]="categoriaId"
+        (change)="categoriaId = $any($event.target).value"
+      >
         <option value="">Seleccionar categoría</option>
+
+        @for (categoria of categorias; track categoria.id) {
+          <option [value]="categoria.id">
+            {{ categoria.nombre }}
+          </option>
+        }
       </select>
     </div>
 
+    <!-- Descripción del legajo -->
     <div class="campo">
-      <label for="descripcion">Descripción <span class="opcional">(opcional)</span></label>
+      <label for="descripcion">
+        Descripción
+        <span class="opcional">(opcional)</span>
+      </label>
+
       <textarea
         id="descripcion"
         name="descripcion"
         rows="4"
-        maxlength="1000"
-        placeholder="Descripción"
+        maxlength="500"
+        placeholder="Descripción del legajo"
         [value]="descripcion"
         (input)="descripcion = $any($event.target).value"
       ></textarea>
+
+      <span class="contador">
+        {{ descripcion.length }} / 500 caracteres
+      </span>
     </div>
 
+    <!-- Mensaje de error -->
+    @if (error) {
+      <div class="mensaje-error" role="alert">
+        {{ error }}
+      </div>
+    }
+
+    <!-- Acciones -->
     <footer class="acciones">
-      <a class="btn-secondary" routerLink="/legajos">Cancelar</a>
-      <button class="btn-primary" type="button" disabled>
-        Guardar
+
+      <a
+        class="btn-secondary"
+        routerLink="/legajos"
+      >
+        Cancelar
+      </a>
+
+      <button
+        class="btn-primary"
+        type="submit"
+        [disabled]="!formularioValido || guardando"
+      >
+        {{ guardando ? 'Guardando...' : 'Guardar legajo' }}
       </button>
+
     </footer>
+
   </form>
 </section>
-

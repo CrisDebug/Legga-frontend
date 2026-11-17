@@ -1,0 +1,141 @@
+
+<section class="pagina-formulario">
+
+  @if (cargando) {
+
+    <div class="mensaje-estado">
+      Cargando información del legajo...
+    </div>
+
+  } @else if (error && !titulo) {
+
+    <div class="mensaje-error" role="alert">
+      {{ error }}
+    </div>
+
+    <a class="btn-volver" routerLink="/legajos">
+      ‹ Volver a legajos
+    </a>
+
+  } @else {
+
+    <!-- Navegación -->
+    <a
+      class="btn-volver"
+      [routerLink]="['/legajos', legajoId]"
+    >
+      <span aria-hidden="true">‹</span>
+      Volver al detalle
+    </a>
+
+    <!-- Encabezado -->
+    <header class="encabezado">
+      <h1>Editar legajo</h1>
+      <p>Modifica la información del legajo documental.</p>
+    </header>
+
+    <!-- Formulario -->
+    <form class="formulario" (submit)="guardar($event)">
+
+      <!-- Título -->
+      <div class="campo">
+        <label for="titulo">
+          Título <span class="obligatorio">*</span>
+        </label>
+
+        <input
+          id="titulo"
+          name="titulo"
+          type="text"
+          autocomplete="off"
+          placeholder="Título del legajo"
+          required
+          maxlength="150"
+          [value]="titulo"
+          (input)="titulo = $any($event.target).value"
+        >
+
+        @if (titulo.length > 0 && !tituloValido) {
+          <span class="error">
+            Ingresa un título válido de máximo 150 caracteres.
+          </span>
+        }
+      </div>
+
+      <!-- Categoría -->
+      <div class="campo">
+        <label for="categoria">
+          Categoría <span class="obligatorio">*</span>
+        </label>
+
+        <select
+          id="categoria"
+          name="categoria"
+          required
+          [value]="categoriaId"
+          (change)="categoriaId = $any($event.target).value"
+        >
+          <option value="">Seleccionar categoría</option>
+
+          @for (categoria of categorias; track categoria.id) {
+            <option [value]="categoria.id">
+              {{ categoria.nombre }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <!-- Descripción -->
+      <div class="campo">
+        <label for="descripcion">
+          Descripción
+          <span class="opcional">(opcional)</span>
+        </label>
+
+        <textarea
+          id="descripcion"
+          name="descripcion"
+          rows="4"
+          maxlength="500"
+          placeholder="Descripción del legajo"
+          [value]="descripcion"
+          (input)="descripcion = $any($event.target).value"
+        ></textarea>
+
+        <span class="contador">
+          {{ descripcion.length }} / 500 caracteres
+        </span>
+      </div>
+
+      <!-- Error -->
+      @if (error) {
+        <div class="mensaje-error" role="alert">
+          {{ error }}
+        </div>
+      }
+
+      <!-- Acciones -->
+      <footer class="acciones">
+
+        <a
+          class="btn-secondary"
+          [routerLink]="['/legajos', legajoId]"
+        >
+          Cancelar
+        </a>
+
+        <button
+          class="btn-primary"
+          type="submit"
+          [disabled]="!formularioValido || guardando"
+        >
+          {{ guardando ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+
+      </footer>
+
+    </form>
+
+  }
+
+</section>
