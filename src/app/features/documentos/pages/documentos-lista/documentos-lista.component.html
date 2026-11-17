@@ -1,0 +1,235 @@
+
+<section class="documentos-page">
+
+  <!-- Encabezado -->
+  <header class="pagina-encabezado">
+    <div>
+      <span class="sobre-titulo">GESTIÓN DOCUMENTAL</span>
+      <h1>Documentos</h1>
+      <p>Consulta y administra la documentación almacenada en LEGGA.</p>
+    </div>
+  </header>
+
+  <!-- Herramientas de búsqueda y filtros -->
+  <section class="panel-filtros">
+
+    <div class="buscador">
+      <span class="buscador-icono">⌕</span>
+      <input
+        type="search"
+        placeholder="Buscar por nombre de documento o legajo..."
+        [value]="busqueda"
+        (input)="alBuscar($event)"
+        aria-label="Buscar documentos"
+      />
+    </div>
+
+    <div class="filtros-selectores">
+
+      <select
+        [value]="categoriaSeleccionada"
+        (change)="alCambiarCategoria($event)"
+        aria-label="Filtrar por categoría"
+      >
+        <option value="">Todas las categorías</option>
+        @for (categoria of categorias; track categoria.id) {
+          <option [value]="categoria.id">
+            {{ categoria.nombre }}
+          </option>
+        }
+      </select>
+
+      <select
+        [value]="estadoSeleccionado"
+        (change)="alCambiarEstado($event)"
+        aria-label="Filtrar por estado"
+      >
+        <option value="">Todos los estados</option>
+        <option value="ASOCIADO">Asociados</option>
+        <option value="DESVINCULADO">Desvinculados</option>
+      </select>
+
+    </div>
+  </section>
+
+  <!-- Resumen -->
+  <div class="resultado-resumen">
+    <span>
+      {{ totalRegistros }}
+      {{ totalRegistros === 1 ? 'documento encontrado' : 'documentos encontrados' }}
+    </span>
+    <span class="resultado-contexto">Biblioteca documental</span>
+  </div>
+
+  <!-- Cargando -->
+  @if (cargando) {
+    <div class="estado-pantalla">
+      <div class="indicador-carga"></div>
+      <p>Cargando documentos...</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (!cargando && error) {
+    <div class="estado-pantalla estado-error">
+      <h3>No pudimos cargar los documentos</h3>
+      <p>{{ error }}</p>
+      <button type="button" (click)="cargarDocumentos()">
+        Reintentar
+      </button>
+    </div>
+  }
+
+  <!-- Tarjetas -->
+  @if (!cargando && !error && documentos.length > 0) {
+
+    <section class="documentos-grid">
+
+      @for (documento of documentos; track documento.id) {
+
+        <article class="documento-card">
+
+          <!-- Miniatura del archivo -->
+          <div class="documento-miniatura">
+
+            <div class="miniatura-hoja">
+              <span class="miniatura-tipo">
+                {{ obtenerTipoDocumento(documento.tipoMime) }}
+              </span>
+
+              <div class="miniatura-lineas">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <div class="miniatura-pie">
+                {{ documento.tipoMime === 'application/pdf' ? 'PDF' : 'ARCHIVO' }}
+              </div>
+            </div>
+
+            <span
+              class="estado-documento"
+              [class.estado-asociado]="estaAsociado(documento)"
+              [class.estado-desvinculado]="!estaAsociado(documento)"
+            >
+              {{ estaAsociado(documento) ? 'Asociado' : 'Desvinculado' }}
+            </span>
+
+          </div>
+
+          <!-- Información -->
+          <div class="documento-informacion">
+
+            <div class="documento-titulo">
+              <div>
+                <h2 [title]="documento.nombreVisible">
+                  {{ documento.nombreVisible }}
+                </h2>
+                <span class="documento-archivo">
+                  {{ documento.nombreOriginal }}
+                </span>
+              </div>
+            </div>
+
+            <div class="documento-relacion">
+              <span class="dato-etiqueta">LEGAJO</span>
+              <span class="dato-valor" [title]="documento.legajoTitulo">
+                {{ documento.legajoTitulo }}
+              </span>
+            </div>
+
+            <div class="documento-relacion">
+              <span class="dato-etiqueta">CATEGORÍA</span>
+              <span class="dato-valor">
+                {{ documento.categoriaNombre }}
+              </span>
+            </div>
+
+            <div class="documento-pie">
+              <div>
+                <span class="dato-etiqueta">CARGADO</span>
+                <span class="fecha-documento">
+                  {{ formatearFecha(documento.uploadedAt) }}
+                </span>
+              </div>
+
+              <span class="documento-tamano">
+                {{ formatearTamano(documento.tamanoBytes) }}
+              </span>
+            </div>
+
+          </div>
+
+          <!-- Acciones -->
+          <footer class="documento-acciones">
+
+            <button
+              type="button"
+              class="boton-ver"
+              (click)="visualizarDocumento(documento)"
+            >
+              Ver documento
+            </button>
+
+            <button
+              type="button"
+              class="boton-descargar"
+              aria-label="Descargar documento"
+              title="Descargar documento"
+              (click)="descargarDocumento(documento)"
+            >
+              ↓
+            </button>
+
+          </footer>
+
+        </article>
+
+      }
+
+    </section>
+
+    <!-- Paginación -->
+    @if (totalPaginas > 1) {
+      <nav class="paginacion" aria-label="Paginación de documentos">
+
+        <button
+          type="button"
+          (click)="paginaAnterior()"
+          [disabled]="paginaActual === 0"
+        >
+          Anterior
+        </button>
+
+        <span>
+          Página {{ paginaActual + 1 }} de {{ totalPaginas }}
+        </span>
+
+        <button
+          type="button"
+          (click)="paginaSiguiente()"
+          [disabled]="paginaActual >= totalPaginas - 1"
+        >
+          Siguiente
+        </button>
+
+      </nav>
+    }
+
+  }
+
+  <!-- Sin resultados -->
+  @if (!cargando && !error && documentos.length === 0) {
+    <div class="estado-pantalla estado-vacio">
+      <div class="vacio-icono">▤</div>
+      <h3>No encontramos documentos</h3>
+      <p>
+        No existen documentos que coincidan con los criterios
+        de búsqueda seleccionados.
+      </p>
+    </div>
+  }
+
+</section>
