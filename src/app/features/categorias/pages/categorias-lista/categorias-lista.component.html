@@ -1,38 +1,108 @@
-﻿<section class="pagina-categorias">
+﻿
+<!-- ==================================================
+     PANTALLA PRINCIPAL DE CATEGORÍAS
+================================================== -->
+<section class="pagina-categorias">
+
+  <!-- ==================================================
+       ENCABEZADO
+  ================================================== -->
   <header class="encabezado-categorias">
-  <div class="titulo-categorias">
-    <div>
-      <h1>Categorías</h1>
+
+    <div class="titulo-categorias">
+      <div>
+        <h1>Categorías</h1>
+        <p>Organiza y administra las categorías de LEGGA.</p>
+      </div>
+
+      <!-- Acceso al formulario de creación -->
+      <a
+        class="btn-primary boton-nueva-categoria"
+        routerLink="/categorias/nueva"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 5v14M5 12h14"></path>
+        </svg>
+
+        <span>Nueva categoría</span>
+      </a>
     </div>
-    <button class="btn-primary boton-nueva-categoria" type="button">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="9"></circle>
-        <path d="M12 8v8M8 12h8"></path>
-      </svg>
-      <span>Nueva categoría</span>
-    </button>
-  </div>
-</header>
 
-  <div class="tabla-contenedor">
-    <table>
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="3" class="estado-vacio">
-            No hay categorías para mostrar.
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  </header>
+
+  <!-- ==================================================
+       CONTENIDO PRINCIPAL
+  ================================================== -->
+  <div class="contenido-categorias">
+
+    <!-- Estado de carga -->
+    @if (cargando) {
+      <div class="estado-categorias">
+        Cargando categorías...
+      </div>
+
+    <!-- Estado sin categorías -->
+    } @else if (categorias.length === 0) {
+      <div class="estado-categorias">
+        <h2>No hay categorías registradas</h2>
+        <p>Comienza creando una nueva categoría.</p>
+
+        <a
+          class="btn-primary"
+          routerLink="/categorias/nueva"
+        >
+          Nueva categoría
+        </a>
+      </div>
+
+    <!-- Listado de tarjetas -->
+    } @else {
+      <div class="grid-categorias">
+
+        @for (categoria of categorias; track categoria.id) {
+          <article class="tarjeta-categoria">
+
+            <!-- Información de la categoría -->
+            <div class="informacion-categoria">
+
+              <div class="icono-categoria" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m12 3 9 5-9 5-9-5 9-5z"></path>
+                <path d="m3 12 9 5 9-5"></path>
+                <path d="m3 16 9 5 9-5"></path>
+              </svg>
+            </div>
+
+              <div class="texto-categoria">
+                <h2>{{ categoria.nombre }}</h2>
+
+                <p>
+                  {{ categoria.descripcion || 'Sin descripción registrada.' }}
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Acción de administración -->
+            <footer class="acciones-categoria">
+              <a
+                class="btn-administrar"
+                [routerLink]="['/categorias', categoria.id]"
+              >
+                Administrar categoría
+
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </a>
+            </footer>
+
+          </article>
+        }
+
+      </div>
+    }
+
   </div>
+
 </section>
-
-
-

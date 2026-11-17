@@ -1,0 +1,234 @@
+
+/* =========================================================
+   FORMULARIO DE CATEGORÍAS - IDENTIDAD VISUAL LEGGA
+   Diseño responsive para escritorio y dispositivos móviles.
+   ========================================================= */
+
+/* Estilos generales del componente */
+:host {
+  display: block;
+  width: 100%;
+  color: #49352D;
+  font-family: 'Nunito Sans', sans-serif;
+  box-sizing: border-box;
+}
+
+/* Contenedor principal del formulario */
+.pagina-formulario {
+  width: 100%;
+  max-width: 680px;
+  margin-left: 0;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* Encabezado y título */
+.encabezado {
+  margin-bottom: 28px;
+}
+
+/* Apariencia del título principal */
+.encabezado h1 {
+  margin: 0;
+  color: #49352D;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+/* Panel que contiene los campos del formulario */
+.formulario {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+  padding: 22px;
+  background: #F8EFE6;
+  border: 1px solid #E8D2C2;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgb(174 96 67 / 8%);
+  box-sizing: border-box;
+}
+
+/* Distribución individual de cada campo */
+.campo {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Etiquetas de los campos */
+.campo label {
+  color: #704432;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Indicador de campo obligatorio */
+.obligatorio {
+  color: #A65338;
+}
+
+/* Indicador de campo opcional */
+.opcional {
+  color: #826D60;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* Apariencia de los controles de entrada */
+.campo input,
+.campo textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid #E8D2C2;
+  border-radius: 5px;
+  background: #FFFAF5;
+  color: #49352D;
+  font: inherit;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgb(174 96 67 / 10%);
+  transition: box-shadow 150ms ease, border-color 150ms ease;
+}
+
+/* Altura y comportamiento del campo descripción */
+.campo textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+/* Color de los textos de ayuda */
+.campo input::placeholder,
+.campo textarea::placeholder {
+  color: #988579;
+}
+
+/* Realce visual al seleccionar un campo */
+.campo input:focus,
+.campo textarea:focus {
+  border-color: #BD8068;
+  outline: 2px solid #BD8068;
+  outline-offset: 1px;
+  box-shadow: 0 3px 10px rgb(174 96 67 / 16%);
+}
+
+/* Mensaje de error del formulario */
+.error {
+  margin: 0;
+  color: #A13F32;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Distribución de los botones de acción */
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+/* Estilos compartidos para los botones */
+.acciones a,
+.acciones button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  border: 1px solid #AE6043;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 150ms ease, opacity 150ms ease;
+}
+
+/* Botón para cancelar y volver al listado */
+.btn-secondary {
+  background: transparent;
+  color: #873F2B;
+}
+
+/* Realce del botón cancelar */
+.btn-secondary:hover {
+  background: #F0E0D3;
+}
+
+/* Botón para guardar la categoría */
+.btn-primary {
+  background: #AE6043;
+  color: #FFFAF5;
+}
+
+/* Realce del botón guardar */
+.btn-primary:hover:not(:disabled) {
+  background: #934C34;
+}
+
+/* Estado deshabilitado del botón guardar */
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   ADAPTACIÓN PARA DISPOSITIVOS MÓVILES
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* El formulario utiliza todo el ancho disponible */
+  .pagina-formulario {
+    max-width: 100%;
+  }
+
+  /* Reduce el espacio del encabezado */
+  .encabezado {
+    margin-bottom: 20px;
+  }
+
+  /* Ajusta el tamaño del título */
+  .encabezado h1 {
+    font-size: 24px;
+  }
+
+  /* Reduce el padding del panel */
+  .formulario {
+    gap: 20px;
+    padding: 20px 16px;
+  }
+
+  /* Distribuye las acciones verticalmente */
+  .acciones {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  /* Facilita la interacción táctil */
+  .acciones a,
+  .acciones button {
+    width: 100%;
+    min-height: 46px;
+  }
+}
+
+/* Ajustes para celulares de ancho reducido */
+@media (max-width: 360px) {
+
+  /* Reduce ligeramente el padding lateral */
+  .formulario {
+    padding: 16px 12px;
+  }
+
+  /* Ajusta el tamaño del título */
+  .encabezado h1 {
+    font-size: 22px;
+  }
+}

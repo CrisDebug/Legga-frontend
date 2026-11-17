@@ -1,0 +1,403 @@
+
+<!-- ==================================================
+     ADMINISTRACIÓN DE CATEGORÍA
+================================================== -->
+<section class="pagina-administracion-categoria">
+
+  <!-- ==================================================
+       ENCABEZADO
+  ================================================== -->
+  <header class="encabezado">
+
+    <!-- Navegación de regreso al listado -->
+    <a
+      class="volver-categorias"
+      routerLink="/categorias"
+    >
+      <span class="contenedor-icono-volver">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"></path>
+        </svg>
+      </span>
+
+      <span>Volver a categorías</span>
+    </a>
+
+    <!-- Información de la categoría seleccionada -->
+    <div class="titulo-pagina">
+      <h1>{{ categoria.nombre || 'Categoría' }}</h1>
+      <p>Administración de categoría</p>
+    </div>
+
+  </header>
+
+  <!-- ==================================================
+       PESTAÑAS DE NAVEGACIÓN
+  ================================================== -->
+  <nav
+    class="pestanas"
+    aria-label="Secciones de administración"
+  >
+
+    <!-- Información general -->
+    <button
+      type="button"
+      class="pestana"
+      [class.activa]="pestanaActiva === 'general'"
+      [attr.aria-selected]="pestanaActiva === 'general'"
+      (click)="cambiarPestana('general')"
+    >
+      <span class="icono-pestana" aria-hidden="true">ⓘ</span>
+      Información general
+    </button>
+
+    <!-- Formulario dinámico -->
+    <button
+      type="button"
+      class="pestana"
+      [class.activa]="pestanaActiva === 'formulario'"
+      [attr.aria-selected]="pestanaActiva === 'formulario'"
+      (click)="cambiarPestana('formulario')"
+    >
+      <span class="icono-pestana" aria-hidden="true">☷</span>
+      Formulario dinámico
+    </button>
+
+  </nav>
+
+  <!-- ==================================================
+       INFORMACIÓN GENERAL
+       Se muestra al ingresar a la pantalla.
+  ================================================== -->
+  <section
+    class="panel-contenido"
+    [hidden]="pestanaActiva !== 'general'"
+  >
+
+    <div class="titulo-seccion">
+      <h2>Información general</h2>
+      <p>Datos principales de esta categoría.</p>
+    </div>
+
+    <div class="formulario-general">
+
+      <!-- Nombre de la categoría -->
+      <div class="campo">
+        <label for="nombreCategoria">
+          Nombre de la categoría
+        </label>
+
+        <input
+          id="nombreCategoria"
+          type="text"
+          [value]="categoria.nombre"
+          readonly
+        >
+      </div>
+
+      <!-- Descripción de la categoría -->
+      <div class="campo">
+        <label for="descripcionCategoria">
+          Descripción
+        </label>
+
+        <textarea
+          id="descripcionCategoria"
+          rows="4"
+          readonly
+        >{{ categoria.descripcion }}</textarea>
+      </div>
+
+      <!-- Nota informativa -->
+      <div class="nota-informativa">
+        <span aria-hidden="true">ⓘ</span>
+
+        La edición de estos datos estará disponible en la siguiente
+        etapa de implementación.
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ==================================================
+       FORMULARIO DINÁMICO
+  ================================================== -->
+  <section
+    class="panel-contenido"
+    [hidden]="pestanaActiva !== 'formulario'"
+  >
+
+    <!-- Encabezado de la sección -->
+    <div class="titulo-seccion">
+      <h2>Formulario dinámico</h2>
+
+      <p>
+        Configura los campos que deberán completarse al crear
+        un legajo de la categoría {{ categoria.nombre }}.
+      </p>
+    </div>
+
+    <!-- Información sobre el uso de los campos -->
+    <div class="nota-informativa">
+      <span aria-hidden="true">ⓘ</span>
+
+      Los campos configurados aquí serán utilizados en el formulario
+      de creación y edición de legajos.
+    </div>
+
+    <!-- ==================================================
+         LISTADO DE CAMPOS CONFIGURADOS
+    ================================================== -->
+    @if (campos.length > 0) {
+
+      <div class="lista-campos">
+
+        @for (campo of campos; track campo.id) {
+
+          <article class="tarjeta-campo">
+
+            <!-- Información del campo -->
+            <div class="informacion-campo">
+
+              <div class="icono-campo" aria-hidden="true">
+                <span>☷</span>
+              </div>
+
+              <div>
+                <h3>{{ campo.etiqueta }}</h3>
+
+                <p>
+                  {{ obtenerEtiquetaTipo(campo.tipo) }}
+                  <span class="separador">•</span>
+                  {{ campo.obligatorio ? 'Obligatorio' : 'Opcional' }}
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Estado y acciones -->
+            <div class="acciones-campo">
+
+              <span
+                class="estado-campo"
+                [class.obligatorio]="campo.obligatorio"
+              >
+                {{ campo.obligatorio ? 'Requerido' : 'Opcional' }}
+              </span>
+
+              <!-- Editar campo -->
+              <button
+                type="button"
+                class="accion-icono"
+                aria-label="Editar campo"
+                title="Editar campo"
+                (click)="editarCampo(campo)"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m15 5 4 4"></path>
+                  <path d="M4 20l4.5-1 10-10a2.12 2.12 0 0 0-3-3l-10 10z"></path>
+                </svg>
+              </button>
+
+              <!-- Eliminar campo -->
+              <button
+                type="button"
+                class="accion-icono"
+                aria-label="Eliminar campo"
+                title="Eliminar campo"
+                (click)="eliminarCampo(campo.id)"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 6h18"></path>
+                  <path d="M8 6V4h8v2"></path>
+                  <path d="m19 6-1 14H6L5 6"></path>
+                  <path d="M10 11v5M14 11v5"></path>
+                </svg>
+              </button>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+      <!-- Agregar otro campo cuando ya existen campos -->
+      @if (!mostrarEditorCampo) {
+
+        <div class="contenedor-agregar-campo">
+          <button
+            type="button"
+            class="btn-agregar-campo"
+            (click)="abrirEditorCampo()"
+          >
+            <span class="icono-mas" aria-hidden="true">+</span>
+            Agregar campo
+          </button>
+        </div>
+
+      }
+
+    } @else {
+
+      <!-- ==================================================
+           ESTADO VACÍO
+           Aparece cuando la categoría no tiene campos.
+      ================================================== -->
+      <div class="estado-sin-campos">
+
+        <!-- Icono de lista en terracota -->
+        <div class="icono-vacio" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M8 6h13"></path>
+            <path d="M8 12h13"></path>
+            <path d="M8 18h13"></path>
+            <path d="M3 6h.01"></path>
+            <path d="M3 12h.01"></path>
+            <path d="M3 18h.01"></path>
+          </svg>
+        </div>
+
+        <h3>Sin campos configurados</h3>
+
+        <p>
+          Esta categoría todavía no tiene campos dinámicos.
+          Puedes mantenerla sin campos si no los necesita.
+        </p>
+
+        <!-- Acción sutil debajo del mensaje -->
+        @if (!mostrarEditorCampo) {
+
+          <button
+            type="button"
+            class="btn-agregar-campo"
+            (click)="abrirEditorCampo()"
+          >
+            <span class="icono-mas" aria-hidden="true">+</span>
+            Agregar campo
+          </button>
+
+        }
+
+      </div>
+
+    }
+
+    <!-- ==================================================
+         EDITOR DE CAMPOS
+         Aparece al agregar o editar un campo.
+    ================================================== -->
+    @if (mostrarEditorCampo) {
+
+      <section class="editor-campo">
+
+        <!-- Encabezado del editor -->
+        <div class="titulo-editor">
+
+          <h3>
+            {{ campoEnEdicionId !== null
+              ? 'Editar campo'
+              : 'Nuevo campo'
+            }}
+          </h3>
+
+          <p>Define las características del campo.</p>
+
+        </div>
+
+        <!-- Nombre del campo -->
+        <div class="campo">
+
+          <label for="etiquetaCampo">
+            Nombre del campo *
+          </label>
+
+          <input
+            id="etiquetaCampo"
+            type="text"
+            maxlength="150"
+            autocomplete="off"
+            placeholder="Ej. RUT del trabajador"
+            [value]="nuevoCampoEtiqueta"
+            (input)="nuevoCampoEtiqueta = $any($event.target).value"
+          >
+
+        </div>
+
+        <!-- Tipo de dato -->
+        <div class="campo">
+
+          <label for="tipoCampo">
+            Tipo de dato *
+          </label>
+
+          <select
+            id="tipoCampo"
+            [value]="nuevoCampoTipo"
+            (change)="nuevoCampoTipo = $any($event.target).value"
+          >
+
+            @for (tipo of tiposCampo; track tipo.valor) {
+
+              <option [value]="tipo.valor">
+                {{ tipo.etiqueta }}
+              </option>
+
+            }
+
+          </select>
+
+        </div>
+
+        <!-- Configuración de obligatoriedad -->
+        <label class="opcion-obligatorio">
+
+          <input
+            type="checkbox"
+            [checked]="nuevoCampoObligatorio"
+            (change)="nuevoCampoObligatorio = $any($event.target).checked"
+          >
+
+          <span>Este campo es obligatorio</span>
+
+        </label>
+
+        <!-- Acciones del editor -->
+        <div class="acciones-editor">
+
+          <!-- Cancelar -->
+          <button
+            type="button"
+            class="btn-cancelar-editor"
+            (click)="cancelarEditorCampo()"
+          >
+            <span class="icono-accion-editor" aria-hidden="true">×</span>
+            Cancelar
+          </button>
+
+          <!-- Agregar o guardar -->
+          <button
+            type="button"
+            class="btn-guardar-editor"
+            [disabled]="!nuevoCampoEtiqueta.trim()"
+            (click)="guardarCampo()"
+          >
+            <span class="icono-accion-editor" aria-hidden="true">+</span>
+
+            {{ campoEnEdicionId !== null
+              ? 'Guardar cambios'
+              : 'Agregar'
+            }}
+          </button>
+
+        </div>
+
+      </section>
+
+    }
+
+  </section>
+
+</section>

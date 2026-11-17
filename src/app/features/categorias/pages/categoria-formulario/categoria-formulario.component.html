@@ -1,0 +1,89 @@
+
+<!-- Contenedor principal de la página de creación de categorías -->
+<section class="pagina-formulario">
+
+  <!-- Encabezado del formulario -->
+  <header class="encabezado">
+    <h1>Nueva categoría</h1>
+  </header>
+
+  <!-- Formulario para ingresar los datos de la categoría -->
+  <form
+    class="formulario"
+    (submit)="$event.preventDefault(); guardar()"
+  >
+
+    <!-- Campo obligatorio: nombre de la categoría -->
+    <div class="campo">
+
+      <!-- Etiqueta del nombre -->
+      <label for="nombre">
+        Nombre <span class="obligatorio">*</span>
+      </label>
+
+      <!-- Entrada de texto para el nombre -->
+      <input
+        id="nombre"
+        name="nombre"
+        type="text"
+        autocomplete="off"
+        placeholder="Nombre de la categoría"
+        required
+        maxlength="150"
+        [value]="nombre"
+        (input)="nombre = $any($event.target).value"
+      >
+
+    </div>
+
+    <!-- Campo opcional: descripción de la categoría -->
+    <div class="campo">
+
+      <!-- Etiqueta de la descripción -->
+      <label for="descripcion">
+        Descripción <span class="opcional">(opcional)</span>
+      </label>
+
+      <!-- Área de texto para describir la categoría -->
+      <textarea
+        id="descripcion"
+        name="descripcion"
+        rows="4"
+        placeholder="Descripción de la categoría"
+        [value]="descripcion"
+        (input)="descripcion = $any($event.target).value"
+      ></textarea>
+
+    </div>
+
+    <!-- Mensaje de error cuando falla la creación -->
+    @if (error) {
+      <p class="error" role="alert">
+        {{ error }}
+      </p>
+    }
+
+    <!-- Acciones disponibles al finalizar el formulario -->
+    <footer class="acciones">
+
+      <!-- Regresa al listado sin guardar -->
+      <a
+        class="btn-secondary"
+        routerLink="/categorias"
+      >
+        Cancelar
+      </a>
+
+      <!-- Envía la solicitud para crear la categoría -->
+      <button
+        class="btn-primary"
+        type="submit"
+        [disabled]="!nombre.trim() || guardando"
+      >
+        {{ guardando ? 'Guardando...' : 'Guardar' }}
+      </button>
+
+    </footer>
+
+  </form>
+</section>

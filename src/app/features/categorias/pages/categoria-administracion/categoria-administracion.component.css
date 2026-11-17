@@ -1,0 +1,716 @@
+
+/* ==================================================
+   CONFIGURACIÓN GENERAL
+================================================== */
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  color: #49352D;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.pagina-administracion-categoria {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ==================================================
+   ENCABEZADO
+================================================== */
+.encabezado {
+  margin-bottom: 24px;
+}
+
+/* ==================================================
+   NAVEGACIÓN DE RETROCESO - PALETA LEGGA
+================================================== */
+.volver-categorias {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+
+  min-height: 44px;
+  margin-bottom: 16px;
+
+  color: #AE6043;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.volver-categorias:hover {
+  color: #81452F;
+}
+
+/* Fondo circular del icono */
+.contenedor-icono-volver {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+
+  border-radius: 50%;
+  background: #F8EFE6;
+  color: #AE6043;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.volver-categorias:hover .contenedor-icono-volver {
+  background: #EEDDCF;
+  transform: translateX(-2px);
+}
+
+/* Flecha SVG */
+.contenedor-icono-volver svg {
+  display: block;
+  width: 19px;
+  height: 19px;
+
+  fill: none;
+  stroke: #AE6043;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ==================================================
+   TÍTULO DE LA PÁGINA
+================================================== */
+.titulo-pagina h1 {
+  margin: 0 0 5px;
+  color: #49352D;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.titulo-pagina p {
+  margin: 0;
+  color: #826D60;
+  font-size: 14px;
+}
+
+/* ==================================================
+   PESTAÑAS DE NAVEGACIÓN
+================================================== */
+.pestanas {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 22px;
+  border-bottom: 1px solid #E8D8C8;
+}
+
+.pestana {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 13px 18px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+
+  background: transparent;
+  color: #826D60;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.pestana:hover {
+  color: #AE6043;
+}
+
+.pestana.activa {
+  color: #AE6043;
+  border-bottom-color: #AE6043;
+}
+
+.icono-pestana {
+  font-size: 17px;
+}
+
+/* ==================================================
+   PANEL PRINCIPAL
+================================================== */
+.panel-contenido {
+  width: 100%;
+  padding: 26px;
+  box-sizing: border-box;
+
+  background: #FFFAF5;
+  border-radius: 9px;
+
+  box-shadow: 0 3px 12px rgb(174 96 67 / 7%);
+}
+
+.titulo-seccion {
+  margin-bottom: 24px;
+}
+
+.titulo-seccion h2 {
+  margin: 0 0 6px;
+  color: #49352D;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.titulo-seccion p {
+  margin: 0;
+  color: #826D60;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ==================================================
+   INFORMACIÓN GENERAL
+================================================== */
+.formulario-general {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 680px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo label {
+  color: #49352D;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+  padding: 12px 14px;
+  box-sizing: border-box;
+
+  border: 1px solid #D9C5B4;
+  border-radius: 6px;
+
+  background: #F8EFE6;
+  color: #49352D;
+
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: #AE6043;
+}
+
+.campo input[readonly],
+.campo textarea[readonly] {
+  cursor: default;
+}
+
+.campo textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* ==================================================
+   NOTA INFORMATIVA
+================================================== */
+.nota-informativa {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  padding: 14px;
+  margin-top: 20px;
+
+  border: 1px solid #E8D8C8;
+  border-radius: 7px;
+
+  background: #F8EFE6;
+  color: #826D60;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.nota-informativa span {
+  flex-shrink: 0;
+  color: #AE6043;
+  font-weight: 700;
+}
+
+/* ==================================================
+   LISTADO DE CAMPOS DINÁMICOS
+================================================== */
+.lista-campos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.tarjeta-campo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 17px;
+  border: 1px solid #E8D8C8;
+  border-radius: 8px;
+
+  background: #FFFAF5;
+}
+
+.informacion-campo {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.icono-campo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+
+  border-radius: 8px;
+  background: #F8EFE6;
+  color: #AE6043;
+  font-size: 20px;
+}
+
+.informacion-campo h3 {
+  margin: 0 0 5px;
+  color: #49352D;
+  font-size: 14px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.informacion-campo p {
+  margin: 0;
+  color: #826D60;
+  font-size: 12px;
+}
+
+.separador {
+  padding: 0 4px;
+}
+
+/* Estado obligatorio u opcional */
+.estado-campo {
+  flex-shrink: 0;
+  padding: 5px 10px;
+  border-radius: 20px;
+
+  background: #F8EFE6;
+  color: #826D60;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.estado-campo.obligatorio {
+  background: #F5E5DC;
+  color: #AE6043;
+}
+
+/* Acciones de cada campo */
+.acciones-campo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.accion-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: #AE6043;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.accion-icono:hover {
+  background: #F8EFE6;
+}
+
+.accion-icono svg {
+  width: 17px;
+  height: 17px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ==================================================
+   ESTADO SIN CAMPOS
+================================================== */
+.estado-sin-campos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 40px 20px 28px;
+  text-align: center;
+}
+
+.icono-vacio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+
+  border-radius: 12px;
+  background: #F8EFE6;
+  color: #AE6043;
+}
+
+/* SVG del icono de lista */
+.icono-vacio svg {
+  display: block;
+  width: 25px;
+  height: 25px;
+
+  fill: none;
+  stroke: #AE6043;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.estado-sin-campos h3 {
+  margin: 0 0 8px;
+  color: #49352D;
+  font-size: 16px;
+}
+
+.estado-sin-campos p {
+  max-width: 420px;
+  margin: 0 auto;
+  color: #826D60;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ==================================================
+   BOTÓN SUTIL AGREGAR CAMPO
+================================================== */
+.btn-agregar-campo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-height: 42px;
+  padding: 7px 12px;
+  margin-top: 12px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: transparent;
+  color: #AE6043;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-agregar-campo:hover {
+  background: #F8EFE6;
+}
+
+.icono-mas {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.contenedor-agregar-campo {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+/* ==================================================
+   EDITOR DE CAMPOS
+================================================== */
+.editor-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  width: 100%;
+  max-width: 680px;
+  margin: 24px auto 0;
+  padding: 18px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #E8D8C8;
+  border-radius: 9px;
+
+  background: #FFFAF5;
+}
+
+/* Encabezado del editor */
+.titulo-editor {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #E8D8C8;
+}
+
+.titulo-editor h3 {
+  margin: 0 0 5px;
+  color: #49352D;
+  font-size: 17px;
+}
+
+.titulo-editor p {
+  margin: 0;
+  color: #826D60;
+  font-size: 13px;
+}
+
+/* Controles del editor */
+.editor-campo .campo input,
+.editor-campo .campo select {
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 13px;
+  box-sizing: border-box;
+
+  border: 1px solid #D9C5B4;
+  border-radius: 6px;
+
+  background: #F8EFE6;
+  color: #49352D;
+
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.editor-campo .campo input:focus,
+.editor-campo .campo select:focus {
+  outline: none;
+  border-color: #AE6043;
+}
+
+/* ==================================================
+   CASILLA DE CAMPO OBLIGATORIO
+================================================== */
+.opcion-obligatorio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 42px;
+
+  color: #49352D;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.opcion-obligatorio input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+
+  accent-color: #AE6043;
+}
+
+/* ==================================================
+   BOTONES CANCELAR Y AGREGAR
+================================================== */
+.acciones-editor {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-cancelar-editor,
+.btn-guardar-editor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-height: 44px;
+  flex: 1;
+
+  padding: 9px 12px;
+  border-radius: 7px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btn-cancelar-editor {
+  border: 1px solid #E8D8C8;
+  background: #F8EFE6;
+  color: #AE6043;
+}
+
+.btn-cancelar-editor:hover {
+  background: #EEDDCF;
+}
+
+.btn-guardar-editor {
+  border: 1px solid #AE6043;
+  background: #AE6043;
+  color: #FFFFFF;
+}
+
+.btn-guardar-editor:hover:not(:disabled) {
+  background: #81452F;
+}
+
+.btn-guardar-editor:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.icono-accion-editor {
+  font-size: 19px;
+  line-height: 1;
+}
+
+/* ==================================================
+   TABLET
+================================================== */
+@media (max-width: 768px) {
+  .panel-contenido {
+    padding: 22px;
+  }
+}
+
+/* ==================================================
+   MÓVIL
+================================================== */
+@media (max-width: 560px) {
+
+  .volver-categorias {
+    min-height: 48px;
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  .titulo-pagina h1 {
+    font-size: 21px;
+  }
+
+  .pestanas {
+    gap: 0;
+  }
+
+  .pestana {
+    flex: 1;
+    padding: 12px 7px;
+    gap: 5px;
+    font-size: 12px;
+  }
+
+  .panel-contenido {
+    padding: 18px;
+  }
+
+  .tarjeta-campo {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px;
+  }
+
+  .acciones-campo {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .estado-campo {
+    margin-right: auto;
+  }
+
+  .estado-sin-campos {
+    padding: 32px 10px 22px;
+  }
+
+  .editor-campo {
+    padding: 16px;
+  }
+
+  .acciones-editor {
+    gap: 8px;
+  }
+
+}
+
+/* ==================================================
+   MÓVILES PEQUEÑOS
+================================================== */
+@media (max-width: 360px) {
+
+  .pestana {
+    font-size: 11px;
+  }
+
+  .panel-contenido {
+    padding: 14px;
+  }
+
+  .btn-cancelar-editor,
+  .btn-guardar-editor {
+    padding: 9px 8px;
+    font-size: 12px;
+  }
+
+}
