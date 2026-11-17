@@ -1,150 +1,940 @@
-﻿:host {
+﻿
+/* =====================================================
+   1. CONTENEDOR GENERAL
+===================================================== */
+
+:host {
   display: block;
+  width: 100%;
   color: #49352D;
   font-family: 'Nunito Sans', sans-serif;
 }
 
 .pagina-trazabilidad {
   width: 100%;
-  max-width: 960px;
-  margin-right: auto;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 12px 4px 32px;
+  box-sizing: border-box;
 }
 
+/* =====================================================
+   2. ENCABEZADO
+===================================================== */
+
 .encabezado-trazabilidad {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 24px;
 }
 
 .encabezado-trazabilidad h1 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   color: #49352D;
-  font-size: 24px;
+  font-size: 27px;
   font-weight: 800;
 }
 
 .encabezado-trazabilidad p {
   margin: 0;
-  color: #725B4E;
-  font-size: 14px;
-}
-
-.tabla-contenedor {
-  overflow-x: auto;
-  border: 0;
-  border-radius: 7px;
-  background: #FFFAF5;
-  box-shadow: 0 3px 12px rgb(174 96 67 / 9%);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-thead {
-  background: #EEDDCF;
-}
-
-th {
-  padding: 14px 16px;
-  color: #49352D;
-  font-size: 13px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-td {
-  padding: 18px 16px;
-  color: #725B4E;
-  font-size: 14px;
-}
-
-tbody tr + tr {
-  border-top: 1px solid #F0E5D9;
-}
-
-.estado-vacio {
-  padding: 32px 16px;
-  text-align: center;
-}
-
-/* Tipografía uniforme con las tablas de LEGGA */
-.tabla-contenedor table {
-  font-family: 'Nunito Sans', sans-serif;
-}
-
-.tabla-contenedor th,
-.tabla-contenedor td {
-  font-family: 'Nunito Sans', sans-serif;
-}
-
-.tabla-contenedor th {
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.tabla-contenedor td {
-  font-size: 14px;
-}
-
-/* Ajuste tipográfico para igualar la suavidad de las tablas LEGGA */
-.tabla-contenedor th {
-  color: #725B4E;
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.tabla-contenedor td {
   color: #826D60;
-  font-family: 'Nunito Sans', sans-serif;
   font-size: 14px;
-  font-weight: 400;
 }
 
-.estado-vacio {
-  color: #826D60;
-  font-weight: 400;
+/* =====================================================
+   3. INDICADORES GENERALES
+===================================================== */
+
+.indicadores-trazabilidad {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
 }
 
-/* Ajustes comunes de ancho y tipografía de las tablas LEGGA */
-.pagina-trazabilidad {
-  width: 100%;
-  max-width: none;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.tabla-contenedor {
-  width: 100%;
-  max-width: none;
+.indicador-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 112px;
+  padding: 18px;
+  background: #FFFFFF;
+  border: 1px solid #F0E2D7;
+  border-radius: 15px;
+  box-shadow: 0 3px 12px rgb(174 96 67 / 7%);
   box-sizing: border-box;
 }
 
-.tabla-contenedor table {
-  width: 100%;
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  text-align: left;
+.indicador-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  font-size: 23px;
+  font-weight: 700;
 }
 
-.tabla-contenedor th {
-  height: 40px;
-  padding: 0 12px;
-  color: #49352D;
-  font-size: inherit;
-  font-weight: 600;
-  white-space: nowrap;
+.icono-total {
+  color: #AE6043;
+  background: #F8E8DC;
 }
 
-.tabla-contenedor td {
-  padding: 12px;
-  font-size: inherit;
-  font-weight: 400;
+.icono-hoy {
+  color: #8D704E;
+  background: #F3EBDD;
 }
 
-.tabla-contenedor .estado-vacio {
+.icono-legajos {
+  color: #63816D;
+  background: #E7F0E8;
+}
+
+.icono-alerta {
+  color: #B66C45;
+  background: #F8E9DF;
+}
+
+.indicador-contenido {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.indicador-contenido span {
   color: #826D60;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.indicador-contenido strong {
+  margin: 3px 0;
+  color: #49352D;
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.indicador-contenido small {
+  color: #A18C7E;
+  font-size: 11px;
+}
+
+/* =====================================================
+   4. BUSCADOR Y FILTROS
+===================================================== */
+
+.filtros-trazabilidad {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  padding: 17px;
+  background: #FFFAF5;
+  border: 1px solid #F0E2D7;
+  border-radius: 15px;
+}
+
+.busqueda-trazabilidad {
+  display: flex;
+  align-items: center;
+  flex: 1 1 260px;
+  min-width: 200px;
+  height: 45px;
+  padding: 0 13px;
+  background: #FFFFFF;
+  border: 1px solid #E8D2C2;
+  border-radius: 9px;
+  box-sizing: border-box;
+}
+
+.icono-busqueda {
+  margin-right: 9px;
+  color: #AE6043;
+  font-size: 23px;
+}
+
+.busqueda-trazabilidad input {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  color: #49352D;
+  background: transparent;
+  border: none;
+  outline: none;
+  font: inherit;
+  font-size: 13px;
+}
+
+.busqueda-trazabilidad:focus-within {
+  border-color: #AE6043;
+  box-shadow: 0 0 0 3px rgb(174 96 67 / 10%);
+}
+
+.filtros-trazabilidad select,
+.filtros-trazabilidad > input[type="date"] {
+  height: 45px;
+  min-width: 145px;
+  padding: 0 12px;
+  color: #725B4E;
+  background: #FFFFFF;
+  border: 1px solid #E8D2C2;
+  border-radius: 9px;
+  outline: none;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.filtros-trazabilidad select:focus,
+.filtros-trazabilidad > input[type="date"]:focus {
+  border-color: #AE6043;
+}
+
+.btn-limpiar {
+  height: 43px;
+  padding: 0 17px;
+  color: #AE6043;
+  background: #F8EFE6;
+  border: 1px solid #E8D2C2;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-limpiar:hover {
+  background: #F0E0D2;
+}
+
+/* =====================================================
+   5. DISTRIBUCIÓN DE EVENTOS Y DETALLE
+   CONTENEDORES BLANCOS
+===================================================== */
+
+.contenido-trazabilidad {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.85fr);
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 22px;
+}
+
+.panel-eventos,
+.panel-detalle,
+.panel-ciclo-vida,
+.leyenda-trazabilidad {
+  min-width: 0;
+  background: #FFFFFF;
+  border: 1px solid #F0E2D7;
+  border-radius: 15px;
+  box-shadow: 0 3px 12px rgb(174 96 67 / 7%);
+}
+
+.panel-eventos,
+.panel-detalle {
+  min-height: 510px;
+}
+
+.panel-eventos,
+.panel-detalle,
+.panel-ciclo-vida {
+  overflow: hidden;
+}
+
+/* =====================================================
+   6. ENCABEZADOS DE LOS PANELES
+   CONSERVAN EL BEIGE ORIGINAL
+===================================================== */
+
+.panel-encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 19px 20px;
+  background: #FFFAF5;
+  border-bottom: 1px solid #F0E5DC;
+}
+
+.panel-encabezado h2 {
+  margin: 0 0 4px;
+  color: #49352D;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.panel-encabezado p {
+  margin: 0;
+  color: #968173;
+  font-size: 12px;
+}
+
+.contador-eventos {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  color: #AE6043;
+  background: #F8E8DC;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* =====================================================
+   7. LÍNEA DE TIEMPO
+===================================================== */
+
+.timeline {
+  padding: 8px 17px;
+  background: #FFFFFF;
+}
+
+.evento-timeline {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  width: 100%;
+  padding: 17px 12px;
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #F3EAE2;
+  border-radius: 10px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.evento-timeline:last-child {
+  border-bottom: none;
+}
+
+.evento-timeline:hover {
+  background: #FCF3EB;
+}
+
+.evento-timeline.evento-seleccionado {
+  background: #F8EDE3;
+  box-shadow: inset 3px 0 #AE6043;
+}
+
+.evento-marcador {
+  flex: 0 0 37px;
+  display: flex;
+  justify-content: center;
+  padding-top: 2px;
+}
+
+.evento-marcador span,
+.detalle-accion > span,
+.ciclo-vida-marcador span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 11px;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.evento-informacion {
+  flex: 1;
+  min-width: 0;
+}
+
+.evento-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+}
+
+.evento-titulo strong {
+  color: #49352D;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.evento-informacion > p {
+  margin: 6px 0 9px;
+  color: #826D60;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.evento-metadata {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 11px;
+  color: #A18C7E;
+  font-size: 10px;
+}
+
+.evento-flecha {
+  align-self: center;
+  color: #B59B89;
+  font-size: 24px;
+}
+
+.estado-resultado {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.resultado-exitoso {
+  color: #52775D;
+  background: #E7F0E8;
+}
+
+.resultado-fallido {
+  color: #A45143;
+  background: #F8E5E0;
+}
+
+/* Colores por tipo de evento */
+
+.evento-creacion {
+  color: #AE6043;
+  background: #F8E5DA;
+}
+
+.evento-documento {
+  color: #66846D;
+  background: #E6F0E7;
+}
+
+.evento-desvinculacion {
+  color: #B36B48;
+  background: #F8EADF;
+}
+
+.evento-modificacion {
+  color: #987B4C;
+  background: #F2EDDE;
+}
+
+.evento-categoria {
+  color: #8B6B91;
+  background: #F0E8F2;
+}
+
+.evento-perfil {
+  color: #637C91;
+  background: #E7EEF3;
+}
+
+.evento-general {
+  color: #826D60;
+  background: #F0E8E0;
+}
+
+/* =====================================================
+   8. PAGINACIÓN
+===================================================== */
+
+.paginacion-eventos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  background: #FFFFFF;
+  border-top: 1px solid #F0E5DC;
+}
+
+.paginacion-eventos > span {
+  color: #968173;
+  font-size: 11px;
+}
+
+.paginacion-eventos > div {
+  display: flex;
+  gap: 7px;
+}
+
+.paginacion-eventos button {
+  padding: 7px 11px;
+  color: #AE6043;
+  background: #F8EFE6;
+  border: 1px solid #E8D2C2;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.paginacion-eventos button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* =====================================================
+   9. PANEL DE DETALLE
+===================================================== */
+
+.detalle-contenido {
+  padding: 19px 20px;
+  background: #FFFFFF;
+}
+
+.detalle-accion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 19px;
+}
+
+.detalle-accion > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.detalle-accion strong {
+  color: #49352D;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.detalle-accion small {
+  margin-top: 3px;
+  color: #A18C7E;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+
+.detalle-resultado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px;
+  background: #FAF3EC;
+  border-radius: 9px;
+}
+
+.detalle-resultado span {
+  color: #826D60;
+  font-size: 11px;
+}
+
+.detalle-resultado strong {
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+}
+
+.detalle-separador {
+  height: 1px;
+  margin: 19px 0;
+  background: #F0E5DC;
+}
+
+.detalle-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.detalle-campo > span {
+  color: #A18C7E;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.detalle-campo > strong {
+  color: #49352D;
+  font-size: 12px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.detalle-campo > small {
+  color: #A18C7E;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+
+.detalle-campo > p {
+  margin: 3px 0 0;
+  color: #725B4E;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.estado-detalle-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  padding: 25px;
+  text-align: center;
+  color: #A18C7E;
+  background: #FFFFFF;
+}
+
+.estado-detalle-vacio > span {
+  color: #AE6043;
+  font-size: 34px;
+}
+
+.estado-detalle-vacio p {
+  max-width: 210px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* =====================================================
+   10. CICLO DE VIDA
+===================================================== */
+
+.panel-ciclo-vida {
+  margin-bottom: 22px;
+  overflow: hidden;
+}
+
+.ciclo-vida-lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 25px;
+  padding: 20px 24px;
+  background: #FFFFFF;
+}
+
+.ciclo-vida-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  min-height: 95px;
+}
+
+.ciclo-vida-marcador {
+  position: relative;
+  flex: 0 0 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ciclo-vida-linea {
+  width: 2px;
+  height: 57px;
+  margin-top: 5px;
+  background: #E8D2C2;
+}
+
+.ciclo-vida-informacion {
+  min-width: 0;
+  padding-bottom: 18px;
+}
+
+.ciclo-vida-informacion strong {
+  display: block;
+  margin: 2px 0 5px;
+  color: #49352D;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ciclo-vida-informacion p {
+  margin: 0 0 6px;
+  color: #826D60;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.ciclo-vida-informacion small {
+  color: #A18C7E;
+  font-size: 10px;
+}
+
+.estado-ciclo-vacio {
+  margin: 0;
+  padding: 26px 20px;
+  color: #968173;
+  font-size: 12px;
+  text-align: center;
+  background: #FFFFFF;
+}
+
+/* =====================================================
+   11. LEYENDA DE EVENTOS
+===================================================== */
+
+.leyenda-trazabilidad {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 17px 20px;
+  background: #FFFFFF;
+}
+
+.leyenda-trazabilidad h3 {
+  margin: 0;
+  color: #49352D;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.leyenda-elementos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.leyenda-elementos > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #826D60;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.leyenda-elementos i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-style: normal;
+}
+
+/* =====================================================
+   12. ESTADOS GENERALES
+===================================================== */
+
+.estado-pantalla,
+.estado-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  padding: 25px;
   text-align: center;
 }
+
+.estado-pantalla {
+  color: #826D60;
+  font-size: 13px;
+}
+
+.estado-vacio h3 {
+  margin: 10px 0 5px;
+  color: #49352D;
+  font-size: 15px;
+}
+
+.estado-vacio p {
+  margin: 0;
+  color: #968173;
+  font-size: 12px;
+}
+
+.vacio-icono {
+  color: #AE6043;
+  font-size: 35px;
+}
+
+.mensaje-error {
+  margin: 20px;
+  padding: 15px;
+  color: #A45143;
+  background: #F8E5E0;
+  border-radius: 9px;
+  font-size: 12px;
+}
+
+/* =====================================================
+   13. RESPONSIVE - TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+  .indicadores-trazabilidad {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contenido-trazabilidad {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .panel-eventos,
+  .panel-detalle {
+    min-height: auto;
+  }
+
+  .ciclo-vida-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =====================================================
+   14. RESPONSIVE - MÓVIL
+===================================================== */
+
+@media (max-width: 650px) {
+  .pagina-trazabilidad {
+    padding: 10px 2px 25px;
+  }
+
+  .encabezado-trazabilidad h1 {
+    font-size: 23px;
+  }
+
+  .indicadores-trazabilidad {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .indicador-card {
+    min-height: 95px;
+    gap: 9px;
+    padding: 12px 10px;
+  }
+
+  .indicador-icono {
+    flex-basis: 36px;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .indicador-contenido span {
+    font-size: 10px;
+  }
+
+  .indicador-contenido strong {
+    font-size: 21px;
+  }
+
+  .indicador-contenido small {
+    font-size: 9px;
+  }
+
+  .filtros-trazabilidad {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 13px;
+  }
+
+  .busqueda-trazabilidad {
+    flex: none;
+    width: 100%;
+  }
+
+  .filtros-trazabilidad select,
+  .filtros-trazabilidad > input[type="date"] {
+    width: 100%;
+  }
+
+  .btn-limpiar {
+    width: 100%;
+  }
+
+  .panel-encabezado {
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .panel-encabezado h2 {
+    font-size: 14px;
+  }
+
+  .panel-encabezado p {
+    font-size: 11px;
+  }
+
+  .timeline {
+    padding: 5px 9px;
+  }
+
+  .evento-timeline {
+    gap: 8px;
+    padding: 14px 8px;
+  }
+
+  .evento-marcador {
+    flex-basis: 32px;
+  }
+
+  .evento-marcador span {
+    width: 31px;
+    height: 31px;
+    font-size: 14px;
+  }
+
+  .evento-titulo {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .evento-titulo strong {
+    font-size: 12px;
+  }
+
+  .evento-informacion > p {
+    font-size: 11px;
+  }
+
+  .evento-metadata {
+    gap: 7px;
+    font-size: 9px;
+  }
+
+  .evento-flecha {
+    font-size: 19px;
+  }
+
+  .detalle-contenido {
+    padding: 16px;
+  }
+
+  .ciclo-vida-lista {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 18px;
+  }
+
+  .ciclo-vida-item {
+    min-height: 88px;
+  }
+
+  .leyenda-trazabilidad {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .leyenda-elementos {
+    gap: 11px;
+  }
+
+  .paginacion-eventos {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+

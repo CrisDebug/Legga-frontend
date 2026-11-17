@@ -1,27 +1,478 @@
-﻿<section class="pagina-trazabilidad">
+﻿
+<!-- ===================================================== -->
+<!-- 1. CONTENEDOR PRINCIPAL -->
+<!-- ===================================================== -->
+
+<section class="pagina-trazabilidad">
+
+  <!-- =================================================== -->
+  <!-- 2. ENCABEZADO -->
+  <!-- =================================================== -->
+
   <header class="encabezado-trazabilidad">
-    <h1>Trazabilidad</h1>
-    <p>Consulta el registro de acciones realizadas en LEGGA.</p>
+    <div>
+      <h1>Trazabilidad</h1>
+      <p>Consulta el historial de operaciones y actividad de LEGGA.</p>
+    </div>
   </header>
 
-  <div class="tabla-contenedor">
-    <table>
-      <thead>
-        <tr>
-          <th>Fecha y hora</th>
-          <th>Actor</th>
-          <th>Acción</th>
-          <th>Entidad</th>
-          <th>ID de entidad</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="5" class="estado-vacio">
-            No hay eventos de trazabilidad para mostrar.
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <!-- =================================================== -->
+  <!-- 3. INDICADORES GENERALES -->
+  <!-- =================================================== -->
+
+  <section class="indicadores-trazabilidad">
+
+    <article class="indicador-card">
+      <div class="indicador-icono icono-total">▤</div>
+      <div class="indicador-contenido">
+        <span>Total de eventos</span>
+        <strong>{{ resumen.totalEventos }}</strong>
+        <small>Registros disponibles</small>
+      </div>
+    </article>
+
+    <article class="indicador-card">
+      <div class="indicador-icono icono-hoy">◷</div>
+      <div class="indicador-contenido">
+        <span>Eventos de hoy</span>
+        <strong>{{ resumen.eventosHoy }}</strong>
+        <small>Actividad del día</small>
+      </div>
+    </article>
+
+    <article class="indicador-card">
+      <div class="indicador-icono icono-legajos">▣</div>
+      <div class="indicador-contenido">
+        <span>Legajos con actividad</span>
+        <strong>{{ resumen.legajosConActividad }}</strong>
+        <small>Legajos registrados</small>
+      </div>
+    </article>
+
+    <article class="indicador-card">
+      <div class="indicador-icono icono-alerta">!</div>
+      <div class="indicador-contenido">
+        <span>Operaciones fallidas</span>
+        <strong>{{ resumen.operacionesFallidas }}</strong>
+        <small>Resultados con error</small>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- =================================================== -->
+  <!-- 4. PANEL DE BÚSQUEDA Y FILTROS -->
+  <!-- =================================================== -->
+
+  <section class="filtros-trazabilidad">
+
+    <div class="busqueda-trazabilidad">
+      <span class="icono-busqueda">⌕</span>
+
+      <input
+        type="search"
+        placeholder="Buscar por legajo, usuario o acción..."
+        [(ngModel)]="busqueda"
+        (keyup.enter)="aplicarFiltros()"
+        aria-label="Buscar eventos de trazabilidad"
+      />
+    </div>
+
+    <select
+      [(ngModel)]="accionSeleccionada"
+      (change)="aplicarFiltros()"
+      aria-label="Filtrar por tipo de evento"
+    >
+      <option value="">Todos los eventos</option>
+
+      @for (accion of accionesDisponibles; track accion) {
+        <option [value]="accion">
+          {{ obtenerNombreAccion(accion) }}
+        </option>
+      }
+    </select>
+
+    <select
+      [(ngModel)]="resultadoSeleccionado"
+      (change)="aplicarFiltros()"
+      aria-label="Filtrar por resultado"
+    >
+      <option value="">Todos los resultados</option>
+      <option value="EXITOSO">Exitoso</option>
+      <option value="FALLIDO">Fallido</option>
+    </select>
+
+    <input
+      type="date"
+      [(ngModel)]="fechaDesde"
+      (change)="aplicarFiltros()"
+      aria-label="Fecha desde"
+    />
+
+    <input
+      type="date"
+      [(ngModel)]="fechaHasta"
+      (change)="aplicarFiltros()"
+      aria-label="Fecha hasta"
+    />
+
+    <button
+      type="button"
+      class="btn-limpiar"
+      (click)="limpiarFiltros()"
+    >
+      Limpiar
+    </button>
+
+  </section>
+
+  <!-- =================================================== -->
+  <!-- 5. CONTENIDO PRINCIPAL -->
+  <!-- =================================================== -->
+
+  <section class="contenido-trazabilidad">
+
+    <!-- =============================================== -->
+    <!-- 5.1 LÍNEA DE TIEMPO -->
+    <!-- =============================================== -->
+
+    <article class="panel-eventos">
+
+      <header class="panel-encabezado">
+        <div>
+          <h2>Actividad reciente</h2>
+          <p>Registro cronológico de operaciones realizadas.</p>
+        </div>
+
+        <span class="contador-eventos">
+          {{ totalRegistros }} eventos
+        </span>
+      </header>
+
+      <!-- Estado de carga -->
+      @if (cargando) {
+        <div class="estado-pantalla">
+          Cargando eventos de trazabilidad...
+        </div>
+      }
+
+      <!-- Estado de error -->
+      @else if (error) {
+        <div class="mensaje-error">
+          {{ error }}
+        </div>
+      }
+
+      <!-- Estado vacío -->
+      @else if (eventos.length === 0) {
+        <div class="estado-vacio">
+          <span class="vacio-icono">◷</span>
+          <h3>No se encontraron eventos</h3>
+          <p>Prueba modificando los filtros de búsqueda.</p>
+        </div>
+      }
+
+      <!-- Timeline -->
+      @else {
+
+        <div class="timeline">
+
+          @for (evento of eventos; track evento.eventId) {
+
+            <button
+              type="button"
+              class="evento-timeline"
+              [class.evento-seleccionado]="eventoSeleccionado?.eventId === evento.eventId"
+              (click)="seleccionarEvento(evento)"
+            >
+
+              <div class="evento-marcador">
+                <span [ngClass]="obtenerClaseAccion(evento.accion)">
+                  {{ obtenerIconoAccion(evento.accion) }}
+                </span>
+              </div>
+
+              <div class="evento-informacion">
+
+                <div class="evento-titulo">
+                  <strong>
+                    {{ obtenerNombreAccion(evento.accion) }}
+                  </strong>
+
+                  <span
+                    class="estado-resultado"
+                    [class.resultado-exitoso]="evento.resultado === 'EXITOSO'"
+                    [class.resultado-fallido]="evento.resultado === 'FALLIDO'"
+                  >
+                    {{ evento.resultado || 'Sin resultado' }}
+                  </span>
+                </div>
+
+                <p>{{ evento.descripcion }}</p>
+
+                <div class="evento-metadata">
+                  <span>♙ {{ evento.actorNombre || 'Usuario no identificado' }}</span>
+                  <span>▣ {{ evento.legajoId }}</span>
+                  <span>◷ {{ formatearHora(evento.fechaHora) }}</span>
+                </div>
+
+              </div>
+
+              <span class="evento-flecha">›</span>
+
+            </button>
+
+          }
+
+        </div>
+
+        <!-- =========================================== -->
+        <!-- 5.2 PAGINACIÓN -->
+        <!-- =========================================== -->
+
+        <footer class="paginacion-eventos">
+
+          <span>
+            Página {{ paginaActual + 1 }} de {{ totalPaginas || 1 }}
+          </span>
+
+          <div>
+            <button
+              type="button"
+              (click)="paginaAnterior()"
+              [disabled]="paginaActual === 0"
+            >
+              Anterior
+            </button>
+
+            <button
+              type="button"
+              (click)="paginaSiguiente()"
+              [disabled]="paginaActual >= totalPaginas - 1"
+            >
+              Siguiente
+            </button>
+          </div>
+
+        </footer>
+
+      }
+
+    </article>
+
+    <!-- =============================================== -->
+    <!-- 5.3 DETALLE DEL EVENTO -->
+    <!-- =============================================== -->
+
+    <aside class="panel-detalle">
+
+      <header class="panel-encabezado">
+        <div>
+          <h2>Detalle del evento</h2>
+          <p>Información de la operación seleccionada.</p>
+        </div>
+      </header>
+
+      @if (eventoSeleccionado; as evento) {
+
+        <div class="detalle-contenido">
+
+          <div class="detalle-accion">
+            <span [ngClass]="obtenerClaseAccion(evento.accion)">
+              {{ obtenerIconoAccion(evento.accion) }}
+            </span>
+
+            <div>
+              <strong>{{ obtenerNombreAccion(evento.accion) }}</strong>
+              <small>{{ evento.eventId }}</small>
+            </div>
+          </div>
+
+          <div class="detalle-resultado">
+            <span>Resultado de la operación</span>
+
+            <strong
+              [class.resultado-exitoso]="evento.resultado === 'EXITOSO'"
+              [class.resultado-fallido]="evento.resultado === 'FALLIDO'"
+            >
+              {{ evento.resultado || 'Sin resultado' }}
+            </strong>
+          </div>
+
+          <div class="detalle-separador"></div>
+
+          <div class="detalle-campo">
+            <span>Usuario responsable</span>
+            <strong>{{ evento.actorNombre || 'No identificado' }}</strong>
+            <small>{{ evento.actorUserId || 'Sin identificador' }}</small>
+          </div>
+
+          <div class="detalle-campo">
+            <span>Legajo asociado</span>
+            <strong>{{ evento.legajoId }}</strong>
+          </div>
+
+          <div class="detalle-campo">
+            <span>Entidad afectada</span>
+            <strong>{{ evento.entidad || 'No especificada' }}</strong>
+          </div>
+
+          <div class="detalle-campo">
+            <span>Identificador de entidad</span>
+            <strong>{{ evento.entidadId || 'No especificado' }}</strong>
+          </div>
+
+          <div class="detalle-campo">
+            <span>Fecha y hora</span>
+            <strong>{{ evento.fechaHora | date:'dd/MM/yyyy HH:mm:ss' }}</strong>
+          </div>
+
+          <div class="detalle-campo">
+            <span>Descripción</span>
+            <p>{{ evento.descripcion }}</p>
+          </div>
+
+          @if (evento.correlationId) {
+            <div class="detalle-campo">
+              <span>Identificador de correlación</span>
+              <strong>{{ evento.correlationId }}</strong>
+            </div>
+          }
+
+        </div>
+
+      } @else {
+
+        <div class="estado-detalle-vacio">
+          <span>◉</span>
+          <p>Selecciona un evento para consultar sus detalles.</p>
+        </div>
+
+      }
+
+    </aside>
+
+  </section>
+
+  <!-- =================================================== -->
+  <!-- 6. CICLO DE VIDA DEL LEGAJO -->
+  <!-- =================================================== -->
+
+  <section class="panel-ciclo-vida">
+
+    <header class="panel-encabezado">
+      <div>
+        <h2>Ciclo de vida del legajo</h2>
+
+        <p>
+          Secuencia de operaciones registradas para el legajo seleccionado.
+        </p>
+      </div>
+
+      @if (eventoSeleccionado) {
+        <span class="contador-eventos">
+          {{ eventoSeleccionado.legajoId }}
+        </span>
+      }
+    </header>
+
+    @if (eventoSeleccionado) {
+
+      @if (obtenerEventosLegajo().length > 0) {
+
+        <div class="ciclo-vida-lista">
+
+          @for (
+            evento of obtenerEventosLegajo();
+            track evento.eventId;
+            let primero = $first;
+            let ultimo = $last
+          ) {
+
+            <div class="ciclo-vida-item">
+
+              <div class="ciclo-vida-marcador">
+                <span [ngClass]="obtenerClaseAccion(evento.accion)">
+                  {{ obtenerIconoAccion(evento.accion) }}
+                </span>
+
+                @if (!ultimo) {
+                  <div class="ciclo-vida-linea"></div>
+                }
+              </div>
+
+              <div class="ciclo-vida-informacion">
+                <strong>{{ obtenerNombreAccion(evento.accion) }}</strong>
+                <p>{{ evento.descripcion }}</p>
+
+                <small>
+                  {{ formatearFecha(evento.fechaHora) }}
+                  · {{ formatearHora(evento.fechaHora) }}
+                  · {{ evento.actorNombre || 'Usuario no identificado' }}
+                </small>
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      } @else {
+
+        <p class="estado-ciclo-vacio">
+          No existen otros eventos disponibles para este legajo.
+        </p>
+
+      }
+
+    } @else {
+
+      <p class="estado-ciclo-vacio">
+        Selecciona un evento para consultar el ciclo de vida de su legajo.
+      </p>
+
+    }
+
+  </section>
+
+  <!-- =================================================== -->
+  <!-- 7. LEYENDA DE EVENTOS -->
+  <!-- =================================================== -->
+
+  <section class="leyenda-trazabilidad">
+
+    <h3>Tipos de eventos</h3>
+
+    <div class="leyenda-elementos">
+
+      <span>
+        <i class="evento-creacion">✚</i>
+        Creación
+      </span>
+
+      <span>
+        <i class="evento-documento">▤</i>
+        Documentos
+      </span>
+
+      <span>
+        <i class="evento-modificacion">✎</i>
+        Modificaciones
+      </span>
+
+      <span>
+        <i class="evento-categoria">▦</i>
+        Categorías
+      </span>
+
+      <span>
+        <i class="evento-perfil">♙</i>
+        Perfiles
+      </span>
+
+    </div>
+
+  </section>
+
 </section>
