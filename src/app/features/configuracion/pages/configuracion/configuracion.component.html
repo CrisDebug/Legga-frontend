@@ -1,0 +1,310 @@
+<div class="configuracion-container">
+  <div class="configuracion-content">
+
+    <!-- ENCABEZADO -->
+    <header class="configuracion-header">
+      <div class="configuracion-breadcrumb">
+        <lucide-icon [img]="iconos.ShieldCheck" [size]="17"></lucide-icon>
+        <span>Administración del sistema</span>
+      </div>
+
+      <h1 class="configuracion-title">Configuración</h1>
+
+      <p class="configuracion-description">
+        Consulta la información de usuarios, perfiles y permisos de LEGGA.
+      </p>
+    </header>
+
+    <!-- PESTAÑAS -->
+    <nav class="configuracion-tabs" aria-label="Secciones de configuración">
+      <button
+        type="button"
+        class="configuracion-tab"
+        [class.active]="pestanaActiva === 'usuarios'"
+        (click)="cambiarPestana('usuarios')"
+      >
+        <lucide-icon [img]="iconos.Users" [size]="18"></lucide-icon>
+        Gestión de usuarios
+      </button>
+
+      <button
+        type="button"
+        class="configuracion-tab"
+        [class.active]="pestanaActiva === 'permisos'"
+        (click)="cambiarPestana('permisos')"
+      >
+        <lucide-icon [img]="iconos.ShieldCheck" [size]="18"></lucide-icon>
+        Roles y permisos
+      </button>
+    </nav>
+
+    <!-- GESTIÓN DE USUARIOS -->
+    @if (pestanaActiva === 'usuarios') {
+      <section class="configuracion-section">
+
+        <div class="configuracion-section-heading">
+          <h2>Gestión de usuarios</h2>
+          <p>Consulta los usuarios registrados y sus perfiles asignados.</p>
+        </div>
+
+        <!-- RESUMEN -->
+        <div class="configuracion-summary">
+
+          <article class="configuracion-summary-card">
+            <div class="summary-card-header">
+              <span>Usuarios registrados</span>
+              <lucide-icon
+                [img]="iconos.Users"
+                [size]="20"
+                class="summary-icon"
+              ></lucide-icon>
+            </div>
+            <p class="summary-number">{{ usuarios.length }}</p>
+          </article>
+
+          <article class="configuracion-summary-card">
+            <div class="summary-card-header">
+              <span>Usuarios activos</span>
+              <lucide-icon
+                [img]="iconos.CheckCircle2"
+                [size]="20"
+                class="summary-icon"
+              ></lucide-icon>
+            </div>
+            <p class="summary-number">{{ usuariosActivos }}</p>
+          </article>
+
+          <article class="configuracion-summary-card">
+            <div class="summary-card-header">
+              <span>Perfiles disponibles</span>
+              <lucide-icon
+                [img]="iconos.ShieldCheck"
+                [size]="20"
+                class="summary-icon"
+              ></lucide-icon>
+            </div>
+            <p class="summary-number">{{ perfiles.length }}</p>
+          </article>
+
+        </div>
+
+        <!-- TABLA DE USUARIOS -->
+        <div class="configuracion-panel">
+
+          <div class="configuracion-panel-header">
+            <h3>Usuarios registrados</h3>
+            <p>
+              Información de consulta. Los cambios de cuentas se gestionan
+              fuera de esta pantalla.
+            </p>
+          </div>
+
+          <div class="configuracion-table-wrapper">
+            <table class="configuracion-table usuarios-table">
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Correo electrónico</th>
+                  <th>Perfil asignado</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for (item of usuarios; track item.usuario.id) {
+                  <tr>
+                    <td>
+                      <div class="usuario-cell">
+                        <div class="usuario-avatar">
+                          <lucide-icon
+                            [img]="iconos.UserRound"
+                            [size]="19"
+                          ></lucide-icon>
+                        </div>
+                        <span class="usuario-nombre">
+                          {{ item.usuario.nombre }}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td class="texto-secundario">
+                      {{ item.usuario.correo }}
+                    </td>
+
+                    <td>
+                      @if (item.perfil) {
+                        <span class="perfil-badge">
+                          {{ item.perfil.nombre }}
+                        </span>
+                      } @else {
+                        <span class="sin-perfil">
+                          Sin perfil asignado
+                        </span>
+                      }
+                    </td>
+
+                    <td>
+                      @if (item.usuario.activo) {
+                        <span class="estado-badge estado-activo">
+                          <lucide-icon
+                            [img]="iconos.CheckCircle2"
+                            [size]="14"
+                          ></lucide-icon>
+                          Activo
+                        </span>
+                      } @else {
+                        <span class="estado-badge estado-inactivo">
+                          <lucide-icon
+                            [img]="iconos.CircleX"
+                            [size]="14"
+                          ></lucide-icon>
+                          Inactivo
+                        </span>
+                      }
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <div class="configuracion-panel-footer">
+            {{ usuarios.length }} usuarios de demostración
+          </div>
+
+        </div>
+
+        <!-- NOTA INFORMATIVA -->
+        <div class="configuracion-info">
+          <lucide-icon
+            [img]="iconos.Info"
+            [size]="19"
+            class="info-icon"
+          ></lucide-icon>
+          <p>
+            Esta vista es exclusivamente informativa. Los datos corresponden
+            a usuarios ficticios utilizados para la demostración del MVP.
+          </p>
+        </div>
+
+      </section>
+    }
+
+    <!-- ROLES Y PERMISOS -->
+    @if (pestanaActiva === 'permisos') {
+      <section class="configuracion-section">
+
+        <div class="configuracion-section-heading">
+          <h2>Roles y permisos</h2>
+          <p>
+            Consulta las responsabilidades y autorizaciones de cada perfil
+            de LEGGA.
+          </p>
+        </div>
+
+        <!-- TARJETAS DE PERFILES -->
+        <div class="perfiles-grid">
+
+          @for (perfil of perfiles; track perfil.codigo; let i = $index) {
+            <article class="perfil-card">
+
+              <div class="perfil-card-header">
+                <div class="perfil-icon">
+                  @if (i === 0) {
+                    <lucide-icon
+                      [img]="iconos.UserRound"
+                      [size]="22"
+                    ></lucide-icon>
+                  } @else if (i === 1) {
+                    <lucide-icon
+                      [img]="iconos.ShieldCheck"
+                      [size]="22"
+                    ></lucide-icon>
+                  } @else {
+                    <lucide-icon
+                      [img]="iconos.Users"
+                      [size]="22"
+                    ></lucide-icon>
+                  }
+                </div>
+
+                <span class="perfil-tipo">
+                  {{ perfil.tipo }}
+                </span>
+              </div>
+
+              <h3>{{ perfil.nombre }}</h3>
+
+              <p>{{ perfil.descripcion }}</p>
+
+            </article>
+          }
+
+        </div>
+
+        <!-- MATRIZ DE PERMISOS -->
+        <div class="configuracion-panel">
+
+          <div class="configuracion-panel-header">
+            <h3>Matriz de permisos</h3>
+            <p>
+              Vista resumida de las autorizaciones definidas en la matriz v1.5.
+            </p>
+          </div>
+
+          <div class="configuracion-table-wrapper">
+            <table class="configuracion-table permisos-table">
+              <thead>
+                <tr>
+                  <th>Funcionalidad</th>
+                  <th>Jefe de departamento</th>
+                  <th>Supervisor administrativo</th>
+                  <th>Usuario administrativo</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for (
+                  permiso of matrizPermisos;
+                  track permiso.funcionalidad
+                ) {
+                  <tr>
+                    <td class="funcionalidad-cell">
+                      {{ permiso.funcionalidad }}
+                    </td>
+                    <td class="texto-secundario">
+                      {{ permiso.jefeDepartamento }}
+                    </td>
+                    <td class="texto-secundario">
+                      {{ permiso.supervisorAdministrativo }}
+                    </td>
+                    <td class="texto-secundario">
+                      {{ permiso.usuarioAdministrativo }}
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- NOTA DOCUMENTAL -->
+        <div class="configuracion-info">
+          <lucide-icon
+            [img]="iconos.Info"
+            [size]="19"
+            class="info-icon"
+          ></lucide-icon>
+          <p>
+            Matriz resumida; los permisos pendientes de validación se mantienen
+            sujetos a revisión. La autorización efectiva debe ser aplicada y
+            validada desde el backend, no solamente desde la interfaz.
+          </p>
+        </div>
+
+      </section>
+    }
+
+  </div>
+</div>

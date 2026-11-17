@@ -1,0 +1,398 @@
+
+@reference "../../../../../styles.css";
+
+:host {
+  @apply block w-full;
+  font-family: 'Nunito Sans', sans-serif;
+  color: #49352D;
+}
+
+/* ==================================================
+   CONTENEDOR GENERAL
+================================================== */
+
+.configuracion-container {
+  @apply mx-auto w-full max-w-[1500px] px-1 pt-3 pb-8;
+  box-sizing: border-box;
+}
+
+.configuracion-content {
+  @apply m-0 w-full max-w-none;
+}
+
+/* ==================================================
+   ENCABEZADO
+================================================== */
+
+.configuracion-header {
+  @apply mb-7 flex flex-col items-start;
+}
+
+.configuracion-breadcrumb {
+  @apply mb-[7px] block text-[11px] font-extrabold uppercase tracking-[1.5px];
+  color: #AE6043;
+}
+
+.configuracion-breadcrumb lucide-icon {
+  @apply hidden;
+}
+
+.configuracion-title {
+  @apply m-0 text-[29px] font-extrabold leading-[1.2];
+  color: #49352D;
+}
+
+.configuracion-description {
+  @apply mt-2 text-sm;
+  color: #826D60;
+}
+
+/* ==================================================
+   PESTAÑAS
+================================================== */
+
+.configuracion-tabs {
+  @apply mb-5 flex items-center gap-2 border-b;
+  border-color: #F0E2D7;
+}
+
+.configuracion-tab {
+  @apply -mb-px inline-flex min-h-11 items-center justify-center gap-2 border-b-2 border-transparent px-[17px] text-[13px] font-bold transition-colors;
+  color: #826D60;
+  background: transparent;
+  cursor: pointer;
+}
+
+.configuracion-tab:hover {
+  color: #AE6043;
+}
+
+.configuracion-tab.active {
+  color: #AE6043;
+  border-bottom-color: #AE6043;
+}
+
+/* ==================================================
+   SECCIONES
+================================================== */
+
+.configuracion-section {
+  @apply flex w-full flex-col gap-5;
+}
+
+.configuracion-section-heading {
+  @apply mb-0.5;
+}
+
+.configuracion-section-heading h2 {
+  @apply m-0 text-[17px] font-extrabold;
+  color: #49352D;
+}
+
+.configuracion-section-heading p {
+  @apply mt-1.5 text-[13px] leading-relaxed;
+  color: #826D60;
+}
+
+/* ==================================================
+   RESUMEN DE USUARIOS
+================================================== */
+
+.configuracion-summary {
+  @apply grid grid-cols-3 gap-4;
+}
+
+.configuracion-summary-card {
+  @apply flex min-w-0 flex-col rounded-[15px] border p-[19px] shadow-sm transition-all duration-200;
+  background: #FFFAF5;
+  border-color: #F0E2D7;
+}
+
+.configuracion-summary-card:hover {
+  @apply -translate-y-0.5 shadow-md;
+}
+
+.summary-card-header {
+  @apply flex items-center justify-between gap-2 text-[13px] font-bold;
+  color: #826D60;
+}
+
+.summary-icon {
+  color: #AE6043;
+}
+
+.summary-number {
+  @apply mt-3 mb-0 text-[29px] font-extrabold leading-tight;
+  color: #49352D;
+}
+
+/* ==================================================
+   PANELES
+================================================== */
+
+.configuracion-panel {
+  @apply w-full overflow-hidden rounded-[15px] border shadow-sm;
+  background: #FFFFFF;
+  border-color: #F0E2D7;
+}
+
+.configuracion-panel-header {
+  @apply border-b px-5 py-[19px];
+  background: #FFFAF5;
+  border-color: #F2E9E2;
+}
+
+.configuracion-panel-header h3 {
+  @apply m-0 text-[15px] font-extrabold;
+  color: #49352D;
+}
+
+.configuracion-panel-header p {
+  @apply mt-[5px] mb-0 text-xs leading-relaxed;
+  color: #826D60;
+}
+
+.configuracion-panel-footer {
+  @apply border-t px-5 py-3 text-[11px];
+  color: #9A8578;
+  background: #FFFAF5;
+  border-color: #F2E9E2;
+}
+
+/* ==================================================
+   TABLAS
+================================================== */
+
+.configuracion-table-wrapper {
+  @apply w-full overflow-x-auto;
+}
+
+.configuracion-table {
+  @apply w-full border-collapse bg-white text-left text-xs;
+  color: #624B3F;
+}
+
+.usuarios-table {
+  min-width: 650px;
+}
+
+.permisos-table {
+  min-width: 850px;
+}
+
+.configuracion-table thead {
+  background: #F8EFE6;
+  color: #826D60;
+}
+
+.configuracion-table th {
+  @apply whitespace-nowrap px-[18px] py-[15px] text-[10px] font-extrabold uppercase tracking-wide;
+}
+
+.configuracion-table td {
+  @apply border-b px-[18px] py-[15px] align-middle;
+  border-color: #F2E9E2;
+}
+
+.configuracion-table tbody tr {
+  @apply transition-colors duration-200;
+}
+
+.configuracion-table tbody tr:hover {
+  background: #FFFAF5;
+}
+
+.configuracion-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.usuario-cell {
+  @apply flex min-w-[180px] items-center gap-[11px];
+}
+
+.usuario-avatar {
+  @apply flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[9px];
+  color: #AE6043;
+  background: #F8EFE6;
+}
+
+.usuario-nombre,
+.funcionalidad-cell {
+  @apply text-xs font-extrabold;
+  color: #49352D;
+}
+
+.texto-secundario {
+  @apply text-xs;
+  color: #826D60;
+}
+
+/* ==================================================
+   PERFILES Y ESTADOS
+================================================== */
+
+.perfil-badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-[5px] text-[10px] font-extrabold;
+  color: #926143;
+  background: #F5E9DD;
+}
+
+.sin-perfil {
+  @apply text-[11px] italic;
+  color: #9A8578;
+}
+
+.estado-badge {
+  @apply inline-flex items-center gap-[5px] whitespace-nowrap rounded-full px-2.5 py-[5px] text-[10px] font-extrabold;
+}
+
+.estado-activo {
+  color: #47745B;
+  background: #E8F2E9;
+}
+
+.estado-inactivo {
+  color: #926143;
+  background: #F5E9DD;
+}
+
+/* ==================================================
+   TARJETAS DE PERFILES
+================================================== */
+
+.perfiles-grid {
+  @apply grid w-full grid-cols-3 gap-5;
+}
+
+.perfil-card {
+  @apply flex min-w-0 flex-col rounded-[15px] border p-[19px] shadow-sm transition-all duration-200;
+  background: #FFFFFF;
+  border-color: #F0E2D7;
+}
+
+.perfil-card:hover {
+  @apply -translate-y-[3px] shadow-lg;
+}
+
+.perfil-card-header {
+  @apply mb-4 flex items-center justify-between gap-2;
+}
+
+.perfil-icon {
+  @apply flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-[9px];
+  color: #AE6043;
+  background: #F8EFE6;
+}
+
+.perfil-tipo {
+  @apply rounded-full px-[9px] py-[5px] text-[10px] font-extrabold;
+  color: #926143;
+  background: #F5E9DD;
+}
+
+.perfil-card h3 {
+  @apply m-0 text-[15px] font-extrabold leading-snug;
+  color: #49352D;
+}
+
+.perfil-card p {
+  @apply mt-2 mb-0 text-xs leading-relaxed;
+  color: #826D60;
+}
+
+/* ==================================================
+   AVISO INFORMATIVO
+================================================== */
+
+.configuracion-info {
+  @apply flex items-start gap-2.5 rounded-[9px] border px-4 py-3.5 text-xs leading-relaxed;
+  color: #826D60;
+  background: #F8EFE6;
+  border-color: #E8D8C8;
+}
+
+.configuracion-info p {
+  @apply m-0;
+}
+
+.info-icon {
+  @apply mt-px shrink-0;
+  color: #AE6043;
+}
+
+/* ==================================================
+   RESPONSIVE: TABLET
+================================================== */
+
+@media (max-width: 1050px) {
+  .configuracion-summary {
+    @apply gap-3;
+  }
+
+  .perfiles-grid {
+    @apply grid-cols-2 gap-4;
+  }
+}
+
+/* ==================================================
+   RESPONSIVE: MÓVIL
+================================================== */
+
+@media (max-width: 600px) {
+  .configuracion-container {
+    @apply px-0.5 pt-2 pb-6;
+  }
+
+  .configuracion-header {
+    @apply mb-5;
+  }
+
+  .configuracion-title {
+    @apply text-[25px];
+  }
+
+  .configuracion-description {
+    @apply max-w-[300px] text-xs leading-relaxed;
+  }
+
+  .configuracion-tabs {
+    @apply gap-0;
+  }
+
+  .configuracion-tab {
+    @apply flex-1 justify-center gap-[5px] px-[7px] text-[11px];
+  }
+
+  .configuracion-section {
+    @apply gap-[15px];
+  }
+
+  .configuracion-summary {
+    @apply grid-cols-1 gap-3;
+  }
+
+  .configuracion-summary-card {
+    @apply p-[15px];
+  }
+
+  .summary-number {
+    @apply text-[25px];
+  }
+
+  .perfiles-grid {
+    @apply grid-cols-1 gap-3.5;
+  }
+
+  .configuracion-panel-header {
+    @apply p-[15px];
+  }
+
+  .configuracion-table th,
+  .configuracion-table td {
+    @apply px-[13px] py-3;
+  }
+
+  .configuracion-info {
+    @apply p-3;
+  }
+}
