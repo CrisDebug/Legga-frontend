@@ -1,53 +1,97 @@
-﻿:host {
+﻿
+/* ==================================================
+   LEGGA - LAYOUT PRINCIPAL
+   Diseño responsive Mobile First
+   Identidad visual: crema y terracota
+   ================================================== */
+
+/* ==================================================
+   1. CONTENEDOR RAÍZ
+   La aplicación ocupa toda la ventana disponible.
+   ================================================== */
+
+:host {
   display: block;
-  min-height: 100vh;
+  width: 100%;
+  height: 100dvh;
   box-sizing: border-box;
-  padding: 12px;
+  overflow: hidden;
   background: #F5EFE7;
   color: #49352D;
   font-family: 'Nunito Sans', sans-serif;
 }
 
+/* ==================================================
+   2. ESTRUCTURA PRINCIPAL
+   Sin bordes ni esquinas redondeadas.
+   ================================================== */
+
 .layout {
   position: relative;
   display: flex;
-  width: min(1520px, 100%);
-  min-height: calc(100vh - 24px);
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
   overflow: hidden;
-  border: 1px solid #E5D8CA;
-  border-radius: 14px;
+  border: 0;
+  border-radius: 0;
   background: #F8F1E8;
-  box-shadow: 0 8px 28px rgb(73 53 45 / 8%);
+  box-shadow: none;
 }
+
+/* ==================================================
+   3. MENÚ LATERAL
+   Permanece independiente del contenido principal.
+   Tiene scroll propio si sus opciones no caben.
+   ================================================== */
 
 .menu-lateral {
   position: absolute;
   inset: 0 auto 0 0;
-  z-index: 30;
+  z-index: 2;
+
   display: flex;
   flex-direction: column;
+
   box-sizing: border-box;
   width: 220px;
+  height: 100%;
   padding: 34px 18px 24px;
-  background: #E8D8C8;
-  border: 0;
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  background: #F8F1E8;
   border-radius: 0;
+  box-shadow: 5px 0 14px rgb(73 53 45 / 7%);
+
+  /* Scroll discreto */
+  scrollbar-width: thin;
+  scrollbar-color: #D9C5B4 transparent;
 }
+
+/* ==================================================
+   4. MARCA Y LOGOTIPO
+   ================================================== */
 
 .marca {
   display: flex;
   justify-content: center;
   flex-shrink: 0;
-  padding: 8px 8px 48px;
+  padding: 8px 8px 38px;
 }
 
 .marca img {
   display: block;
-  width: 174px;
+  width: 148px;
   max-width: 100%;
   height: auto;
 }
+
+/* ==================================================
+   5. NAVEGACIÓN
+   ================================================== */
 
 .navegacion {
   display: flex;
@@ -55,25 +99,38 @@
   gap: 5px;
 }
 
+/* Enlaces principales */
+
 .enlace-menu {
   display: flex;
   align-items: center;
+  gap: 12px;
+
   box-sizing: border-box;
   min-height: 48px;
   padding: 0 13px;
+
   border: 0;
   border-left: 3px solid transparent;
   border-radius: 5px;
+
   color: #624538;
   font-size: 14px;
   text-decoration: none;
-  transition: background-color 150ms ease, color 150ms ease;
+
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
 }
 
+/* Estado hover */
+
 .enlace-menu:hover {
-  background: #E1CABB;
+  background: #F0E3D7;
   color: #873F2B;
 }
+
+/* Estado activo */
 
 .enlace-menu.activo {
   border-left-color: #BD8068;
@@ -82,150 +139,18 @@
   font-weight: 700;
 }
 
-.enlace-menu:focus-visible,
-.enlace-sesion:focus-visible,
-.boton-menu:focus-visible {
-  outline: 2px solid #BD8068;
-  outline-offset: 2px;
-}
-
-.menu-inferior {
-  margin-top: auto;
-  padding-top: 16px;
-}
-
-.enlace-sesion {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 44px;
-  padding: 0 12px;
-  border-radius: 5px;
-  color: #624538;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.enlace-sesion:hover {
-  background: #E1CABB;
-  color: #873F2B;
-}
-
-.icono-salida {
-  font-size: 19px;
-  line-height: 1;
-}
-
-.contenido-principal {
-  box-sizing: border-box;
-  flex: 1;
-  min-width: 0;
-  min-height: calc(100vh - 24px);
-  margin-left: 220px;
-  padding: 76px 34px 36px;
-  background: #F8F1E8;
-}
-
-.barra-movil,
-.fondo-menu {
-  display: none;
-}
-
-@media (min-width: 761px) {
-  .menu-lateral {
-    border-radius: 13px 0 0 13px;
-  }
-}
-
-@media (max-width: 760px) {
-  :host {
-    padding: 6px;
-  }
-
-  .layout {
-    display: block;
-    width: 100%;
-    min-height: calc(100dvh - 12px);
-    border-radius: 12px;
-  }
-
-  .barra-movil {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-height: 62px;
-    box-sizing: border-box;
-    padding: 10px 16px;
-    background: #E8D8C8;
-  }
-
-  .boton-menu {
-    width: 40px;
-    height: 40px;
-    border: 0;
-    border-radius: 5px;
-    background: transparent;
-    color: #873F2B;
-    font-size: 22px;
-    cursor: pointer;
-  }
-
-  .logo-movil {
-    display: block;
-    width: 124px;
-    height: auto;
-  }
-
-  .menu-lateral {
-    position: fixed;
-    inset: 0 auto 0 0;
-    width: min(280px, 85vw);
-    height: 100dvh;
-    overflow-y: auto;
-    border-radius: 0;
-    transform: translateX(-100%);
-    transition: transform 180ms ease;
-  }
-
-  .menu-lateral.abierto {
-    transform: translateX(0);
-  }
-
-  .fondo-menu.visible {
-    position: fixed;
-    inset: 0;
-    z-index: 25;
-    display: block;
-    background: rgb(49 37 30 / 30%);
-  }
-
-  .contenido-principal {
-    min-height: calc(100dvh - 74px);
-    margin-left: 0;
-    padding: 26px 18px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .enlace-menu,
-  .menu-lateral {
-    transition: none;
-  }
-}
-
-/* Iconografía lineal del menú LEGGA */
-.enlace-menu {
-  gap: 12px;
-}
+/* ==================================================
+   6. ICONOGRAFÍA
+   Iconos SVG lineales del menú LEGGA.
+   ================================================== */
 
 .icono-menu {
   display: block;
   flex: 0 0 19px;
+
   width: 19px;
   height: 19px;
+
   fill: none;
   stroke: currentColor;
   stroke-width: 1.7;
@@ -238,32 +163,30 @@
   min-width: 0;
 }
 
-.icono-sesion {
-  flex-basis: 19px;
-}
+/* ==================================================
+   7. CERRAR SESIÓN
+   Permanece al final del menú lateral.
+   ================================================== */
 
-/* Sidebar crema: dar protagonismo al logotipo */
-.menu-lateral {
-  background: #F8F1E8;
-}
-
-.enlace-menu {
-  color: #624538;
-}
-
-.enlace-menu:hover {
-  background: #F0E3D7;
-  color: #873F2B;
-}
-
-.enlace-menu.activo {
-  background: #F3E2D5;
-  border-left-color: #BD8068;
-  color: #873F2B;
+.menu-inferior {
+  margin-top: auto;
+  padding-top: 16px;
+  flex-shrink: 0;
 }
 
 .enlace-sesion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 44px;
+  padding: 0 12px;
+
+  border-radius: 5px;
+
   color: #624538;
+  font-size: 14px;
+  text-decoration: none;
 }
 
 .enlace-sesion:hover {
@@ -271,35 +194,190 @@
   color: #873F2B;
 }
 
+.icono-sesion {
+  flex-basis: 19px;
+  width: 19px;
+  height: 19px;
+}
+
+/* ==================================================
+   8. CONTENIDO PRINCIPAL
+   Desplazamiento independiente del menú lateral.
+   ================================================== */
+
+.contenido-principal {
+  box-sizing: border-box;
+
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+
+  height: 100%;
+  margin-left: 220px;
+
+  padding: 76px 34px 36px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior-y: contain;
+
+  background: #F8F1E8;
+
+  /* Scroll discreto */
+  scrollbar-width: thin;
+  scrollbar-color: #D9C5B4 transparent;
+}
+
+/* ==================================================
+   9. BARRAS DE DESPLAZAMIENTO
+   Compatibilidad con navegadores WebKit.
+   ================================================== */
+
+.contenido-principal::-webkit-scrollbar,
+.menu-lateral::-webkit-scrollbar {
+  width: 7px;
+}
+
+.contenido-principal::-webkit-scrollbar-thumb,
+.menu-lateral::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #D9C5B4;
+}
+
+.contenido-principal::-webkit-scrollbar-track,
+.menu-lateral::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ==================================================
+   10. ELEMENTOS EXCLUSIVOS DE MÓVILES
+   Ocultos por defecto en escritorio.
+   ================================================== */
+
+.barra-movil,
+.fondo-menu {
+  display: none;
+}
+
+
+/* ==================================================
+   RESPONSIVE - TABLETS PEQUEÑAS Y MÓVILES
+   Hasta 760 px: navegación superior desplegable.
+   ================================================== */
+
 @media (max-width: 760px) {
+
+  /* Permitir que el documento crezca verticalmente */
+  :host {
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+    padding: 0;
+    overflow: visible;
+  }
+
+  /* Layout sin restricciones de altura */
+  .layout {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* Barra superior permanente durante el scroll */
   .barra-movil {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 62px;
+    box-sizing: border-box;
+    padding: 10px 16px;
     background: #F8F1E8;
   }
-}
 
-/* Separación visual sutil entre navegación y contenido */
-.menu-lateral {
-  z-index: 2;
-  box-shadow: 5px 0 14px rgb(73 53 45 / 7%);
-}
+  /* Botón hamburguesa */
+  .boton-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #873F2B;
+    font-size: 22px;
+    cursor: pointer;
+  }
 
-/* Logotipo más discreto y equilibrado */
-.marca {
-  padding-bottom: 38px;
-}
+  /* Logotipo de la barra superior */
+  .logo-movil {
+    display: block;
+    width: 124px;
+    height: auto;
+  }
 
-.marca img {
-  width: 148px;
-}
-
-/* Evitar una sombra excesiva en pantallas pequeñas */
-@media (max-width: 760px) {
+  /* Menú lateral oculto inicialmente */
   .menu-lateral {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 30;
+    width: min(280px, 85vw);
+    height: 100dvh;
+    overflow-y: auto;
+    border-radius: 0;
     box-shadow: 5px 0 20px rgb(49 37 30 / 12%);
+    transform: translateX(-100%);
+    transition: transform 180ms ease;
   }
 
-  .marca img {
-    width: 148px;
+  /* Menú visible al presionar hamburguesa */
+  .menu-lateral.abierto {
+    transform: translateX(0);
+  }
+
+  /* Fondo oscuro detrás del menú */
+  .fondo-menu.visible {
+    position: fixed;
+    inset: 0;
+    z-index: 25;
+    display: block;
+    background: rgb(49 37 30 / 30%);
+  }
+
+  /* Dashboard ocupa todo el ancho y crece verticalmente */
+  .contenido-principal {
+    width: 100%;
+    height: auto;
+    min-height: calc(100dvh - 62px);
+    margin-left: 0;
+    padding: 26px 18px;
+    overflow: visible;
   }
 }
+
+
+/* ==================================================
+   12. ACCESIBILIDAD
+   Respeta la preferencia de movimiento reducido.
+   ================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .enlace-menu,
+  .menu-lateral {
+    transition: none;
+  }
+}
+
+/* ==================================================
+   FIN DEL LAYOUT PRINCIPAL LEGGA
+   ================================================== */
 
