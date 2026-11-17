@@ -1,0 +1,565 @@
+
+<!-- ========================================================= -->
+<!-- PANTALLA: COMPLETITUD DEL LEGAJO                          -->
+<!-- FUNCIONALIDAD: F-09 - VERIFICACIÓN DE COMPLETITUD        -->
+<!-- ========================================================= -->
+
+<section class="completitud-container">
+
+  <!-- ======================================================= -->
+  <!-- 1. ENCABEZADO DE LA PANTALLA                             -->
+  <!-- ======================================================= -->
+
+  <header class="encabezado">
+
+    <div>
+      <h1>Completitud del legajo</h1>
+
+      <p>
+        Revisa el estado de los requisitos documentales de cada legajo
+        e identifica aquellos que necesitan atención.
+      </p>
+    </div>
+
+  </header>
+
+
+  <!-- ======================================================= -->
+  <!-- 2. INDICADORES GENERALES                                 -->
+  <!-- ======================================================= -->
+
+  <section class="indicadores">
+
+    <!-- Total de legajos -->
+    <article class="indicador-card">
+
+      <div class="indicador-icono icono-total">
+        ▱
+      </div>
+
+      <div class="indicador-contenido">
+        <span>Total de legajos</span>
+        <strong>{{ totalLegajos }}</strong>
+      </div>
+
+    </article>
+
+
+    <!-- Legajos completos -->
+    <article class="indicador-card">
+
+      <div class="indicador-icono icono-completo">
+        ✓
+      </div>
+
+      <div class="indicador-contenido">
+        <span>Legajos completos</span>
+        <strong>{{ legajosCompletos }}</strong>
+      </div>
+
+    </article>
+
+
+    <!-- Legajos pendientes -->
+    <article class="indicador-card">
+
+      <div class="indicador-icono icono-pendiente">
+        !
+      </div>
+
+      <div class="indicador-contenido">
+        <span>Legajos pendientes</span>
+        <strong>{{ legajosPendientes }}</strong>
+      </div>
+
+    </article>
+
+
+    <!-- Porcentaje general -->
+    <article class="indicador-card">
+
+      <div class="indicador-icono icono-progreso">
+        ▥
+      </div>
+
+      <div class="indicador-contenido">
+        <span>Completitud general</span>
+        <strong>{{ porcentajeGeneral }}%</strong>
+      </div>
+
+    </article>
+
+  </section>
+
+
+  <!-- ======================================================= -->
+  <!-- 3. BUSCADOR Y FILTROS                                    -->
+  <!-- MISMA ESTRUCTURA VISUAL DEL MÓDULO DOCUMENTOS            -->
+  <!-- ======================================================= -->
+
+  <section class="filtros-panel">
+
+    <!-- Buscador por legajo -->
+    <div class="campo-busqueda">
+
+      <span class="busqueda-icono">⌕</span>
+
+      <input
+        type="search"
+        placeholder="Buscar legajo por nombre..."
+        [value]="busqueda"
+        (input)="alBuscar($event)"
+        aria-label="Buscar legajos por nombre"
+      />
+
+    </div>
+
+
+    <!-- Filtros de categoría y completitud -->
+    <select
+      [value]="categoriaSeleccionada"
+      (change)="alCambiarCategoria($event)"
+      aria-label="Filtrar por categoría"
+    >
+
+      <option value="">Todas las categorías</option>
+
+      @for (categoria of categorias; track categoria.id) {
+
+        <option [value]="categoria.id">
+          {{ categoria.nombre }}
+        </option>
+
+      }
+
+    </select>
+
+
+    <select
+      [value]="estadoSeleccionado"
+      (change)="alCambiarEstado($event)"
+      aria-label="Filtrar por estado de completitud"
+    >
+
+      <option value="">Todos los estados</option>
+      <option value="COMPLETO">Completos</option>
+      <option value="PENDIENTE">Pendientes</option>
+
+    </select>
+
+  </section>
+
+
+  <!-- ======================================================= -->
+  <!-- 4. RESUMEN DE RESULTADOS                                 -->
+  <!-- ======================================================= -->
+
+  <div class="resultados-encabezado">
+
+    <span>
+      {{ totalRegistros }}
+      {{ totalRegistros === 1 ? 'legajo encontrado' : 'legajos encontrados' }}
+    </span>
+
+  </div>
+
+
+  <!-- ======================================================= -->
+  <!-- 5. ESTADO DE CARGA                                       -->
+  <!-- ======================================================= -->
+
+  @if (cargando) {
+
+    <div class="estado-pantalla">
+
+      <span class="indicador-carga"></span>
+
+      <p>Cargando información documental...</p>
+
+    </div>
+
+  }
+
+
+  <!-- ======================================================= -->
+  <!-- 6. MENSAJE DE ERROR                                      -->
+  <!-- ======================================================= -->
+
+  @if (error) {
+
+    <div class="mensaje-error">
+      {{ error }}
+    </div>
+
+  }
+
+
+  <!-- ======================================================= -->
+  <!-- 7. RESULTADOS Y TARJETAS DE LEGAJOS                      -->
+  <!-- ======================================================= -->
+
+  @if (!cargando && !error) {
+
+    @if (resultados.length > 0) {
+
+      <section class="legajos-grid">
+
+        @for (resultado of resultados; track resultado.legajoId) {
+
+          <!-- TARJETA INDIVIDUAL DEL LEGAJO -->
+          <article class="legajo-card">
+
+
+            <!-- ================================================= -->
+            <!-- 7.1 CABECERA BEIGE HORIZONTAL                     -->
+            <!-- IDENTIFICACIÓN DEL LEGAJO                         -->
+            <!-- ================================================= -->
+
+            <header class="legajo-card-header">
+
+              <!-- Icono de carpeta -->
+              <div class="legajo-icono">
+
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M3 6.5A1.5 1.5 0 0 1 4.5 5H10l2 2h7.5A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"
+                  />
+                </svg>
+
+              </div>
+
+
+              <!-- Nombre e identificación -->
+              <div class="legajo-identificacion">
+
+                <h3>
+                  Legajo: {{ resultado.legajoTitulo }}
+                </h3>
+
+                <span>
+                  {{ resultado.categoriaNombre }}
+                </span>
+
+              </div>
+
+
+              <!-- Estado del legajo -->
+              <span
+                class="estado-legajo"
+                [class.estado-activo]="resultado.estadoLegajo === 'ACTIVO'"
+                [class.estado-archivado]="resultado.estadoLegajo !== 'ACTIVO'"
+              >
+
+                {{ resultado.estadoLegajo === 'ACTIVO' ? 'Activo' : 'Archivado' }}
+
+              </span>
+
+            </header>
+
+
+            <!-- ================================================= -->
+            <!-- 7.2 CUERPO BLANCO DE LA TARJETA                   -->
+            <!-- INFORMACIÓN DE COMPLETITUD                        -->
+            <!-- ================================================= -->
+
+            <div class="legajo-card-body">
+
+
+              <!-- ----------------------------------------------- -->
+              <!-- 7.2.1 PORCENTAJE Y BARRA DE PROGRESO             -->
+              <!-- ----------------------------------------------- -->
+
+              <section class="progreso-seccion">
+
+                <div class="progreso-encabezado">
+
+                  <strong>Completitud documental</strong>
+
+                  <strong class="porcentaje">
+                    {{ resultado.resumen.porcentajeCompletitud }}%
+                  </strong>
+
+                </div>
+
+
+                <!-- Barra visual de progreso -->
+                <div
+                  class="barra-progreso"
+                  role="progressbar"
+                  [attr.aria-valuenow]="resultado.resumen.porcentajeCompletitud"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  [attr.aria-label]="'Completitud documental: ' + resultado.resumen.porcentajeCompletitud + '%'"
+                >
+
+                  <div
+                    class="barra-progreso-valor"
+                    [class.progreso-completo]="resultado.resumen.porcentajeCompletitud === 100"
+                    [class.progreso-intermedio]="resultado.resumen.porcentajeCompletitud >= 50 && resultado.resumen.porcentajeCompletitud < 100"
+                    [class.progreso-bajo]="resultado.resumen.porcentajeCompletitud < 50"
+                    [style.width.%]="resultado.resumen.porcentajeCompletitud"
+                  ></div>
+
+                </div>
+
+
+                <!-- Cantidad de requisitos cumplidos -->
+                <p class="texto-progreso">
+
+                  {{ resultado.resumen.requisitosCumplidos }}
+                  de
+                  {{ resultado.resumen.totalRequisitos }}
+                  requisitos obligatorios cumplidos
+
+                </p>
+
+              </section>
+
+
+              <!-- ----------------------------------------------- -->
+              <!-- 7.2.2 ESTADO GENERAL DE COMPLETITUD              -->
+              <!-- ----------------------------------------------- -->
+
+              <div
+                class="resumen-estado"
+                [class.resumen-completo]="resultado.resumen.completo"
+                [class.resumen-pendiente]="!resultado.resumen.completo"
+              >
+
+                @if (resultado.resumen.completo) {
+
+                  <span class="estado-icono">✓</span>
+
+                  <strong>
+                    Documentación completa
+                  </strong>
+
+                } @else {
+
+                  <span class="estado-icono">!</span>
+
+                  <strong>
+
+                    {{ resultado.resumen.requisitosPendientes }}
+
+                    {{
+                      resultado.resumen.requisitosPendientes === 1
+                        ? 'requisito pendiente'
+                        : 'requisitos pendientes'
+                    }}
+
+                  </strong>
+
+                }
+
+              </div>
+
+
+              <!-- ----------------------------------------------- -->
+              <!-- 7.2.3 DETALLE DE REQUISITOS DOCUMENTALES         -->
+              <!-- ----------------------------------------------- -->
+
+              <section class="requisitos-seccion">
+
+                <h4>Detalle de requisitos</h4>
+
+
+                <!-- Listado de requisitos del legajo -->
+                @for (
+                  requisito of resultado.requisitos;
+                  track requisito.requisitoId
+                ) {
+
+                  <div class="requisito-item">
+
+
+                    <!-- Indicador de cumplimiento -->
+                    <span
+                      class="requisito-icono"
+                      [class.requisito-cumplido]="requisito.cumplido"
+                      [class.requisito-pendiente]="!requisito.cumplido"
+                    >
+
+                      {{ requisito.cumplido ? '✓' : '!' }}
+
+                    </span>
+
+
+                    <!-- Nombre del requisito -->
+                    <span class="requisito-nombre">
+
+                      {{ requisito.nombre }}
+
+                    </span>
+
+
+                    <!-- Clasificación del requisito -->
+                    <span
+                      class="requisito-tipo"
+                      [class.requisito-opcional]="!requisito.obligatorio"
+                    >
+
+                      {{ requisito.obligatorio ? 'Obligatorio' : 'Opcional' }}
+
+                    </span>
+
+                  </div>
+
+                }
+
+              </section>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- 7.3 PIE BLANCO DE LA TARJETA                      -->
+            <!-- FECHA DE ACTUALIZACIÓN Y ACCESO AL LEGAJO         -->
+            <!-- ================================================= -->
+
+            <footer class="legajo-card-footer">
+
+
+              <!-- Fecha de actualización -->
+              <div class="fecha-actualizacion">
+
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                  <rect
+                    x="3"
+                    y="5"
+                    width="18"
+                    height="16"
+                    rx="2"
+                  ></rect>
+
+                  <path d="M16 3v4M8 3v4M3 10h18"></path>
+
+                </svg>
+
+                <span>
+                  Actualizado: {{ formatearFecha(resultado.calculadoEn) }}
+                </span>
+
+              </div>
+
+
+              <!-- Acción para consultar el legajo -->
+              <a
+                [routerLink]="['/legajos', resultado.legajoId]"
+                class="accion-ver-legajo"
+                [attr.aria-label]="'Ver legajo ' + resultado.legajoTitulo"
+              >
+
+                <!-- Icono de ojo -->
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+
+                  <path
+                    d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"
+                  />
+
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="3"
+                  />
+
+                </svg>
+
+                <span>Ver legajo</span>
+
+                <span class="flecha-accion">→</span>
+
+              </a>
+
+            </footer>
+
+          </article>
+
+        }
+
+      </section>
+
+
+      <!-- ===================================================== -->
+      <!-- 8. PAGINACIÓN                                         -->
+      <!-- ===================================================== -->
+
+      @if (totalPaginas > 1) {
+
+        <nav
+          class="paginacion"
+          aria-label="Paginación de legajos"
+        >
+
+          <button
+            type="button"
+            (click)="paginaAnterior()"
+            [disabled]="paginaActual === 0"
+          >
+            ← Anterior
+          </button>
+
+
+          <span>
+            Página {{ paginaActual + 1 }} de {{ totalPaginas }}
+          </span>
+
+
+          <button
+            type="button"
+            (click)="paginaSiguiente()"
+            [disabled]="paginaActual >= totalPaginas - 1"
+          >
+            Siguiente →
+          </button>
+
+        </nav>
+
+      }
+
+    } @else {
+
+
+      <!-- ===================================================== -->
+      <!-- 9. ESTADO SIN RESULTADOS                              -->
+      <!-- ===================================================== -->
+
+      <div class="sin-resultados">
+
+        <span class="sin-resultados-icono">
+          ▱
+        </span>
+
+        <h3>No se encontraron legajos</h3>
+
+        <p>
+          No existen legajos que coincidan con los criterios
+          de búsqueda seleccionados.
+        </p>
+
+      </div>
+
+    }
+
+  }
+
+
+  <!-- ======================================================= -->
+  <!-- 10. NOTA INFORMATIVA                                    -->
+  <!-- ACLARACIÓN DEL ALCANCE DE F-09                           -->
+  <!-- ======================================================= -->
+
+  <div class="nota-informativa">
+
+    <span class="nota-icono">ⓘ</span>
+
+    <p>
+      La completitud indica la presencia de documentos asociados
+      a los requisitos. No representa una validación ni aprobación
+      del contenido.
+    </p>
+
+  </div>
+
+</section>
