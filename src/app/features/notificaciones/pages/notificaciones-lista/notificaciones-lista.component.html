@@ -1,0 +1,443 @@
+
+<section class="pagina-notificaciones">
+
+  <!-- 1. ENCABEZADO -->
+  <header class="encabezado-notificaciones">
+    <div>
+      <h1>Notificaciones</h1>
+      <p>Consulta las alertas y situaciones que requieren atención en LEGGA.</p>
+    </div>
+  </header>
+
+  <!-- 2. INDICADORES -->
+  <section class="indicadores-notificaciones">
+
+    <article class="indicador-card">
+      <div class="indicador-icono icono-total">▤</div>
+      <div class="indicador-contenido">
+        <span>Total de notificaciones</span>
+        <strong>{{ resumen.total }}</strong>
+        <small>Registros disponibles</small>
+      </div>
+    </article>
+
+    <article class="indicador-card">
+      <div class="indicador-icono icono-pendiente">◉</div>
+      <div class="indicador-contenido">
+        <span>No leídas</span>
+        <strong>{{ resumen.noLeidas }}</strong>
+        <small>Requieren atención</small>
+      </div>
+    </article>
+
+    <article class="indicador-card">
+      <div class="indicador-icono icono-completitud">▣</div>
+      <div class="indicador-contenido">
+        <span>Completitud documental</span>
+        <strong>{{ resumen.completitud }}</strong>
+        <small>Alertas no leídas</small>
+      </div>
+    </article>
+
+    <article class="indicador-card">
+      <div class="indicador-icono icono-vencimiento">◷</div>
+      <div class="indicador-contenido">
+        <span>Vencimientos</span>
+        <strong>{{ resumen.vencimientos }}</strong>
+        <small>Alertas no leídas</small>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- 3. FILTROS -->
+  <section class="filtros-notificaciones">
+
+    <div class="filtros-superiores">
+
+      <div class="busqueda-notificaciones">
+        <span class="icono-busqueda">⌕</span>
+        <input
+          type="search"
+          placeholder="Buscar notificaciones..."
+          [(ngModel)]="busqueda"
+          (keyup.enter)="aplicarFiltros()"
+          aria-label="Buscar notificaciones"
+        />
+      </div>
+
+      <button
+        type="button"
+        class="btn-limpiar"
+        (click)="limpiarFiltros()"
+      >
+        Limpiar filtros
+      </button>
+
+    </div>
+
+    <div class="filtros-inferiores">
+
+      <div class="grupo-filtro">
+        <span>Estado:</span>
+
+        <div class="filtro-chips">
+          <button
+            type="button"
+            [class.activo]="estadoSeleccionado === ''"
+            (click)="filtrarPorEstado('')"
+          >
+            Todas
+          </button>
+
+          <button
+            type="button"
+            [class.activo]="estadoSeleccionado === 'NO_LEIDA'"
+            (click)="filtrarPorEstado('NO_LEIDA')"
+          >
+            No leídas
+          </button>
+
+          <button
+            type="button"
+            [class.activo]="estadoSeleccionado === 'LEIDA'"
+            (click)="filtrarPorEstado('LEIDA')"
+          >
+            Leídas
+          </button>
+        </div>
+      </div>
+
+      <div class="grupo-filtro">
+        <span>Tipo:</span>
+
+        <div class="filtro-chips">
+          <button
+            type="button"
+            [class.activo]="categoriaSeleccionada === ''"
+            (click)="filtrarPorCategoria('')"
+          >
+            Todas
+          </button>
+
+          <button
+            type="button"
+            [class.activo]="categoriaSeleccionada === 'COMPLETITUD'"
+            (click)="filtrarPorCategoria('COMPLETITUD')"
+          >
+            Completitud
+          </button>
+
+          <button
+            type="button"
+            [class.activo]="categoriaSeleccionada === 'VENCIMIENTO'"
+            (click)="filtrarPorCategoria('VENCIMIENTO')"
+          >
+            Vencimientos
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- 4. CONTENIDO PRINCIPAL -->
+  <section class="contenido-notificaciones">
+
+    <!-- 4.1 LISTADO -->
+    <article class="panel-listado">
+
+      <header class="panel-encabezado">
+        <div>
+          <h2>Bandeja de notificaciones</h2>
+          <p>Alertas de completitud documental y vencimientos.</p>
+        </div>
+
+        <span class="contador-notificaciones">
+          {{ totalRegistros }} notificaciones
+        </span>
+      </header>
+
+      @if (cargando) {
+
+        <div class="estado-pantalla">
+          Cargando notificaciones...
+        </div>
+
+      } @else if (error) {
+
+        <div class="mensaje-error">
+          {{ error }}
+        </div>
+
+      } @else if (notificaciones.length === 0) {
+
+        <div class="estado-vacio">
+          <span class="vacio-icono">♧</span>
+          <h3>No hay notificaciones</h3>
+          <p>No se encontraron alertas con los filtros seleccionados.</p>
+        </div>
+
+      } @else {
+
+        <div class="lista-notificaciones">
+
+          @for (
+            notificacion of notificaciones;
+            track notificacion.id
+          ) {
+
+            <article
+              class="notificacion-item"
+              [class.no-leida]="notificacion.estadoLectura === 'NO_LEIDA'"
+              [class.seleccionada]="notificacionSeleccionada?.id === notificacion.id"
+              (click)="seleccionarNotificacion(notificacion)"
+            >
+
+              <div
+                class="notificacion-icono"
+                [ngClass]="obtenerClaseCategoria(notificacion.categoria)"
+              >
+                {{ obtenerIconoCategoria(notificacion.categoria) }}
+              </div>
+
+              <div class="notificacion-contenido">
+
+                <div class="notificacion-superior">
+                  <span
+                    class="notificacion-categoria"
+                    [ngClass]="obtenerClaseCategoria(notificacion.categoria)"
+                  >
+                    {{ obtenerNombreCategoria(notificacion.categoria) }}
+                  </span>
+
+                  <span
+                    class="estado-lectura"
+                    [class.estado-no-leida]="notificacion.estadoLectura === 'NO_LEIDA'"
+                    [class.estado-leida]="notificacion.estadoLectura === 'LEIDA'"
+                  >
+                    {{ obtenerNombreEstado(notificacion.estadoLectura) }}
+                  </span>
+                </div>
+
+                <h3>{{ notificacion.titulo }}</h3>
+
+                <p>{{ notificacion.mensaje }}</p>
+
+                <div class="notificacion-metadata">
+                  <span>
+                    {{ formatearFecha(notificacion.creadaEn) }}
+                  </span>
+
+                  <span>
+                    {{ formatearHora(notificacion.creadaEn) }}
+                  </span>
+
+                  <span>
+                    {{ obtenerNombreTipo(notificacion.tipo) }}
+                  </span>
+                </div>
+
+                <div class="notificacion-acciones">
+
+                  <button
+                    type="button"
+                    class="btn-ver-detalle"
+                    (click)="seleccionarNotificacion(notificacion); $event.stopPropagation()"
+                  >
+                    Ver detalle
+                  </button>
+
+                  @if (notificacion.estadoLectura === 'NO_LEIDA') {
+                    <button
+                      type="button"
+                      class="btn-marcar-leida"
+                      (click)="marcarComoLeida(notificacion); $event.stopPropagation()"
+                    >
+                      Marcar como leída
+                    </button>
+                  }
+
+                </div>
+
+              </div>
+
+              @if (notificacion.estadoLectura === 'NO_LEIDA') {
+                <span class="indicador-no-leida" title="No leída"></span>
+              }
+
+            </article>
+
+          }
+
+        </div>
+
+        <!-- PAGINACIÓN -->
+        <footer class="paginacion-notificaciones">
+
+          <span>
+            Página {{ paginaActual + 1 }} de {{ totalPaginas || 1 }}
+          </span>
+
+          <div>
+            <button
+              type="button"
+              (click)="paginaAnterior()"
+              [disabled]="paginaActual === 0"
+            >
+              Anterior
+            </button>
+
+            <button
+              type="button"
+              (click)="paginaSiguiente()"
+              [disabled]="paginaActual >= totalPaginas - 1"
+            >
+              Siguiente
+            </button>
+          </div>
+
+        </footer>
+
+      }
+
+    </article>
+
+    <!-- 4.2 DETALLE -->
+    <aside class="panel-detalle">
+
+      <header class="panel-encabezado">
+        <div>
+          <h2>Detalle de notificación</h2>
+          <p>Información de la alerta seleccionada.</p>
+        </div>
+      </header>
+
+      @if (notificacionSeleccionada; as notificacion) {
+
+        <div class="detalle-contenido">
+
+          <div
+            class="detalle-icono"
+            [ngClass]="obtenerClaseCategoria(notificacion.categoria)"
+          >
+            {{ obtenerIconoCategoria(notificacion.categoria) }}
+          </div>
+
+          <span
+            class="notificacion-categoria"
+            [ngClass]="obtenerClaseCategoria(notificacion.categoria)"
+          >
+            {{ obtenerNombreCategoria(notificacion.categoria) }}
+          </span>
+
+          <h3>{{ notificacion.titulo }}</h3>
+
+          <p class="detalle-mensaje">
+            {{ notificacion.mensaje }}
+          </p>
+
+          <div class="detalle-separador"></div>
+
+          <div class="detalle-campo">
+            <span>Tipo de notificación</span>
+            <strong>{{ obtenerNombreTipo(notificacion.tipo) }}</strong>
+          </div>
+
+          <div class="detalle-campo">
+            <span>Estado de lectura</span>
+            <strong
+              [class.texto-no-leida]="notificacion.estadoLectura === 'NO_LEIDA'"
+              [class.texto-leida]="notificacion.estadoLectura === 'LEIDA'"
+            >
+              {{ obtenerNombreEstado(notificacion.estadoLectura) }}
+            </strong>
+          </div>
+
+          <div class="detalle-campo">
+            <span>Fecha de creación</span>
+            <strong>
+              {{ notificacion.creadaEn | date:'dd/MM/yyyy HH:mm' }}
+            </strong>
+          </div>
+
+          @if (notificacion.leidaEn) {
+            <div class="detalle-campo">
+              <span>Fecha de lectura</span>
+              <strong>
+                {{ notificacion.leidaEn | date:'dd/MM/yyyy HH:mm' }}
+              </strong>
+            </div>
+          }
+
+          <div class="detalle-campo">
+            <span>Entidad relacionada</span>
+            <strong>{{ notificacion.entidadDescripcion }}</strong>
+            <small>{{ notificacion.entidadTipo }} · {{ notificacion.entidadId }}</small>
+          </div>
+
+          @if (notificacion.metadata) {
+            @if (notificacion.metadata['legajoCodigo']) {
+              <div class="detalle-campo">
+                <span>Legajo</span>
+                <strong>{{ notificacion.metadata['legajoCodigo'] }}</strong>
+              </div>
+            }
+
+            @if (notificacion.metadata['documentoNombre']) {
+              <div class="detalle-campo">
+                <span>Documento</span>
+                <strong>{{ notificacion.metadata['documentoNombre'] }}</strong>
+              </div>
+            }
+
+            @if (notificacion.metadata['fechaVencimiento']) {
+              <div class="detalle-campo">
+                <span>Fecha de vencimiento</span>
+                <strong>
+                  {{ notificacion.metadata['fechaVencimiento'] }}
+                </strong>
+              </div>
+            }
+          }
+
+          <div class="detalle-acciones">
+
+            @if (notificacion.estadoLectura === 'NO_LEIDA') {
+              <button
+                type="button"
+                class="btn-principal"
+                (click)="marcarSeleccionadaComoLeida()"
+              >
+                Marcar como leída
+              </button>
+            }
+
+            <button
+              type="button"
+              class="btn-secundario"
+              (click)="abrirRelacionado(notificacion)"
+              [disabled]="!notificacion.entidadId"
+            >
+              Ir al registro relacionado
+            </button>
+
+          </div>
+
+        </div>
+
+      } @else {
+
+        <div class="estado-detalle-vacio">
+          <span>◉</span>
+          <p>Selecciona una notificación para consultar sus detalles.</p>
+        </div>
+
+      }
+
+    </aside>
+
+  </section>
+
+</section>
