@@ -19,7 +19,7 @@ export class LoginEleganteComponent {
     // Destino al que regresará el usuario después de autenticarse.
     // Corresponde al Dashboard de LEGGA en Azure Static Web Apps.
     const destino =
-      'https://agreeable-forest-0ef55150f3.azurestaticapps.net/dashboard';
+      'https://agreeable-forest-0ef55150f.3.azurestaticapps.net/dashboard';
 
     // Construye la URL de autenticación utilizando el proveedor
     // personalizado de Entra External ID configurado en Easy Auth.
