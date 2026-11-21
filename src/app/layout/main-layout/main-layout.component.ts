@@ -165,5 +165,18 @@ export class MainLayoutComponent implements OnInit {
   obtenerIcono(nombre: string) {
     return this.iconos[nombre as keyof typeof this.iconos];
   }
+  //cerrar session
+  cerrarSesion(): void {
+  const bffUrl =
+    'https://ca-legga-documentos.kindsand-630031cb.chilecentral.azurecontainerapps.io';
 
+  const destino =
+    'https://agreeable-forest-0ef55150f.3.azurestaticapps.net/login-elegante';
+
+  const logoutUrl =
+    `${bffUrl}/.auth/logout` +
+    `?post_logout_redirect_uri=${encodeURIComponent(destino)}`;
+
+  window.location.href = logoutUrl;
+}
 }
