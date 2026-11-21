@@ -1,0 +1,48 @@
+
+<main class="login-page">
+
+  <!-- Panel izquierdo: identidad visual de LEGGA -->
+  <section class="brand-panel">
+    <div class="brand-content">
+      <div class="wordmark" aria-label="LEGGA">LEGGA</div>
+    </div>
+
+    <div class="divider"></div>
+  </section>
+
+  <!-- Panel derecho: acceso a la plataforma -->
+  <section class="form-panel">
+    <div class="login-form">
+
+      <div class="welcome-content">
+
+        <p class="eyebrow">
+          PLATAFORMA INSTITUCIONAL
+        </p>
+
+        <h1>Bienvenido a LEGGA</h1>
+
+        <p class="description">
+          Gestiona la información institucional y documental
+          desde un espacio seguro y centralizado.
+        </p>
+
+        <!-- Inicio de sesión mediante Azure Easy Auth -->
+        <button
+          class="primary-button"
+          type="button"
+          (click)="iniciarSesion()"
+        >
+          Ingresar a LEGGA
+        </button>
+
+        <p class="security-note">
+          Acceso seguro mediante Microsoft.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>

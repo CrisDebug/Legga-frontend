@@ -1,0 +1,13 @@
+
+{
+  "/api": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "headers": {
+      "X-MS-CLIENT-PRINCIPAL": "eyJjbGFpbXMiOlt7InR5cCI6InRpZCIsInZhbCI6ImM3NWRiM2IzLWIzOWYtNGIzMi1iZDMzLWI4MzYwMjNjN2M5ZiJ9LHsidHlwIjoib2lkIiwidmFsIjoiZGE5OGJkZTYtOTk5MC00MDEyLTg4YzgtZTU1MGExMGMxOWE4In0seyJ0eXAiOiJlbWFpbCIsInZhbCI6IkNSSVMuQlJILkFOQUxJU1RBQEdNQUlMLkNPTSJ9LHsidHlwIjoibmFtZSIsInZhbCI6IkNSSVMgQkFSQUhPTkEgLSBGVU5EQURPUiBERSBMRUdHQSJ9XX0="
+    }
+  }
+}
+

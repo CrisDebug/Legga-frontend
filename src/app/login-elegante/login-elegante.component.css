@@ -1,0 +1,210 @@
+
+/* =========================================
+   CONFIGURACIÓN GENERAL
+========================================= */
+
+:host {
+  display: block;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #39332f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* =========================================
+   ESTRUCTURA PRINCIPAL
+========================================= */
+
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  align-items: stretch;
+  gap: clamp(28px, 5vw, 76px);
+  padding: 38px clamp(24px, 5vw, 80px);
+  background: #f6f1e9;
+}
+
+/* =========================================
+   PANEL DE IDENTIDAD LEGGA
+========================================= */
+
+.brand-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.brand-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 24px;
+}
+
+.wordmark {
+  color: #a85d45;
+  font-size: clamp(48px, 5.2vw, 78px);
+  font-weight: 300;
+  letter-spacing: .105em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Separador vertical entre los paneles */
+.divider {
+  position: absolute;
+  right: calc(clamp(28px, 5vw, 76px) / -2);
+  width: 1px;
+  height: 72%;
+  background: #ded4c9;
+}
+
+/* =========================================
+   PANEL DE ACCESO
+========================================= */
+
+.form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 320px;
+}
+
+/* =========================================
+   CONTENIDO DE BIENVENIDA
+========================================= */
+
+.welcome-content {
+  width: 100%;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: #91482f;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+.welcome-content h1 {
+  margin: 0 0 14px;
+  color: #39332f;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -.04em;
+}
+
+.description {
+  margin: 0 0 28px;
+  color: #806f62;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   BOTÓN PRINCIPAL
+========================================= */
+
+.primary-button {
+  display: block;
+  width: 100%;
+  height: 41px;
+  margin: 0;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 6px;
+  background: #783923;
+  color: #fffaf4;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.primary-button:hover {
+  background: #642d1c;
+}
+
+.primary-button:focus-visible {
+  outline: 2px solid #a85d45;
+  outline-offset: 3px;
+}
+
+/* =========================================
+   MENSAJE DE SEGURIDAD
+========================================= */
+
+.security-note {
+  margin: 18px 0 0;
+  color: #806f62;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* =========================================
+   DISEÑO RESPONSIVE - TABLETS
+========================================= */
+
+@media (max-width: 900px) {
+
+  .login-page {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 28px 20px 36px;
+  }
+
+  .brand-panel {
+    justify-content: center;
+  }
+
+  .brand-content {
+    padding: 8px 0;
+  }
+
+  .wordmark {
+    font-size: 48px;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .form-panel {
+    align-items: flex-start;
+  }
+
+  .login-form {
+    max-width: 360px;
+  }
+}
+
+/* =========================================
+   DISEÑO RESPONSIVE - MÓVILES
+========================================= */
+
+@media (max-width: 420px) {
+
+  .login-page {
+    padding: 20px 18px 28px;
+  }
+
+  .wordmark {
+    font-size: 42px;
+  }
+
+  .login-form {
+    max-width: none;
+  }
+}

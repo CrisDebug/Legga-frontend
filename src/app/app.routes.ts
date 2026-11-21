@@ -63,7 +63,6 @@ import { NotificacionesListaComponent } from './features/notificaciones/pages/no
 
 // =====================================================
 // CONFIGURACIÓN
-// Consulta de usuarios, perfiles y permisos.
 // =====================================================
 
 import { ConfiguracionComponent } from './features/configuracion/pages/configuracion/configuracion.component';
@@ -82,7 +81,13 @@ export const routes: Routes = [
   { path: 'login-elegante', component: LoginEleganteComponent },
 
   // -------------------------------------------------
-  // 2. APLICACIÓN PRINCIPAL
+  // 2. ENTRADA PRINCIPAL
+  // -------------------------------------------------
+
+  { path: '', redirectTo: 'login-elegante', pathMatch: 'full' },
+
+  // -------------------------------------------------
+  // 3. APLICACIÓN PRINCIPAL
   // Todas estas pantallas utilizan el layout general.
   // -------------------------------------------------
 
@@ -100,7 +105,6 @@ export const routes: Routes = [
       // -------------------------------------------------
 
       { path: 'legajos', component: LegajosListaComponent },
-
       { path: 'legajos/nuevo', component: LegajoFormularioComponent },
 
       {
@@ -152,24 +156,17 @@ export const routes: Routes = [
 
       // -------------------------------------------------
       // CONFIGURACIÓN
-      // Consulta de usuarios, perfiles y matriz de permisos.
       // -------------------------------------------------
 
-      { path: 'configuracion', component: ConfiguracionComponent },
-
-      // -------------------------------------------------
-      // RUTA INICIAL
-      // -------------------------------------------------
-
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+      { path: 'configuracion', component: ConfiguracionComponent }
 
     ]
   },
 
   // -------------------------------------------------
-  // 3. RUTA DE RESPALDO
+  // 4. RUTA DE RESPALDO
   // -------------------------------------------------
 
-  { path: '**', redirectTo: 'dashboard' }
+  { path: '**', redirectTo: 'login-elegante' }
 
 ];

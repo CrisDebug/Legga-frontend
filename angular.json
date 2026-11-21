@@ -75,9 +75,10 @@
           "configurations": {
             "production": {
               "buildTarget": "legga-web:build:production"
-            },
+            },            
             "development": {
-              "buildTarget": "legga-web:build:development"
+              "buildTarget": "legga-web:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
